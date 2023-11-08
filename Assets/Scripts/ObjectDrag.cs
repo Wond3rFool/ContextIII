@@ -2,12 +2,27 @@ using UnityEngine;
 
 public class ObjectDrag : MonoBehaviour
 {
-    private Vector3 offset;
-    private bool isDragging = false;
+    [SerializeField]
+    private Camera cam;
+
+    private bool isDragging;
+
+    private void Start()
+    {
+        isDragging = false;
+    }
+
+
+    private void Update()
+    {
+        if(isDragging)
+        {
+            transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 15));
+        }
+    }
 
     private void OnMouseDown()
     {
-        offset = transform.position - GetMouseWorldPos();
         isDragging = true;
     }
 
@@ -15,22 +30,4 @@ public class ObjectDrag : MonoBehaviour
     {
         isDragging = false;
     }
-
-    private void Update()
-    {
-        if (isDragging)
-        {
-            Vector3 targetPosition = GetMouseWorldPos() + offset;
-            transform.position = targetPosition;
-        }
-    }
-
-    private Vector3 GetMouseWorldPos()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = Camera.main.nearClipPlane;
-        return Camera.main.ScreenToWorldPoint(mousePos);
-    }
 }
-
-
