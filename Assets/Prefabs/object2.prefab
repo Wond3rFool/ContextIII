@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 1705020219856067613}
   - component: {fileID: 7665454108485885816}
   - component: {fileID: 2792114405046609020}
+  - component: {fileID: 5243622821469837934}
   m_Layer: 0
   m_Name: object2
-  m_TagString: Untagged
+  m_TagString: SnapObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,3 +148,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+--- !u!114 &5243622821469837934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6255900296698840986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c3d090cd3b74b4c86741c55d397d8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snapDistance: 2

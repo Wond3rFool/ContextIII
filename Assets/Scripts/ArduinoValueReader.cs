@@ -22,10 +22,48 @@ public class ArduinoValueReader : MonoBehaviour
 
     void Start()
     {
-        sp = new SerialPort(portName, baudRate);
-        sp.Open();
-        sp.ReadTimeout = 1; // Set the read timeout to 100 milliseconds
+        TryInitializeSerialPort();
     }
+
+    void TryInitializeSerialPort()
+    {
+        string[] portNames = SerialPort.GetPortNames();
+
+        foreach (string port in portNames)
+        {
+            sp = new SerialPort(port, 9600);
+            sp.ReadTimeout = 100; // Adjust the timeout as needed
+
+            try
+            {
+                sp.Open();
+                string message = sp.ReadLine().Trim();
+
+                if (!string.IsNullOrEmpty(message))
+                {
+                    Debug.Log("Connected to port: " + port);
+                    break;
+                }
+            }
+            catch (System.Exception)
+            {
+                // Handle exceptions if any
+            }
+            finally
+            {
+                if (sp.IsOpen)
+                {
+                    sp.Close();
+                }
+            }
+        }
+
+        if (sp == null || !sp.IsOpen)
+        {
+            Debug.LogError("Arduino not found. Make sure it's connected and try again.");
+        }
+    }
+
 
 
     void Update()
