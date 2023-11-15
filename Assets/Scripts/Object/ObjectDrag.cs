@@ -5,10 +5,10 @@ public class ObjectDrag : MonoBehaviour
     [SerializeField]
     private Camera cam;
 
-    private bool isDragging;
-
+    [SerializeField]
     private float rotationSpeed = 90.0f;
 
+    private bool isDragging;
     private Renderer objectRenderer;
 
     private Material objectMaterial1;
@@ -20,7 +20,7 @@ public class ObjectDrag : MonoBehaviour
     {
         isDragging = false;
         cam = FindAnyObjectByType<Camera>();
-        objectRenderer = GetComponent<Renderer>();
+        objectRenderer = GetComponentInChildren<Renderer>();
     }
 
 
@@ -29,7 +29,7 @@ public class ObjectDrag : MonoBehaviour
         if(isDragging)
         {
             //check where the mouse is for object dragging around
-            transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 15));
+            transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7));
 
             //Rotation for the objects
             if (Input.GetKey(KeyCode.A)) transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
