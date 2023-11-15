@@ -28,11 +28,17 @@ public class ObjectDrag : MonoBehaviour
     {
         if(isDragging)
         {
+            //check where the mouse is for object dragging around
             transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 15));
-            if (Input.GetKey(KeyCode.Q)) transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-            if (Input.GetKey(KeyCode.E)) transform.Rotate(Vector3.right * -rotationSpeed * Time.deltaTime);
 
-            if (Input.GetKey(KeyCode.S)) objectRenderer.material = objectMaterial1;
+            //Rotation for the objects
+            if (Input.GetKey(KeyCode.A)) transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+            if (Input.GetKey(KeyCode.D)) transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime);
+            if (Input.GetKey(KeyCode.W)) transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime);
+            if (Input.GetKey(KeyCode.S)) transform.Rotate(Vector3.right * -rotationSpeed * Time.deltaTime);
+            
+            //changing the material for the object.
+            if (Input.GetKey(KeyCode.Q)) objectRenderer.material = objectMaterial1;
         }
     }
 
