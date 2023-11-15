@@ -9,10 +9,18 @@ public class ObjectDrag : MonoBehaviour
 
     private float rotationSpeed = 90.0f;
 
+    private Renderer objectRenderer;
+
+    private Material objectMaterial1;
+    private Material objectMaterial2;
+    private Material objectMaterial3;
+    private Material objectMaterial4;
+
     private void Start()
     {
         isDragging = false;
         cam = FindAnyObjectByType<Camera>();
+        objectRenderer = GetComponent<Renderer>();
     }
 
 
@@ -24,7 +32,7 @@ public class ObjectDrag : MonoBehaviour
             if (Input.GetKey(KeyCode.Q)) transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
             if (Input.GetKey(KeyCode.E)) transform.Rotate(Vector3.right * -rotationSpeed * Time.deltaTime);
 
-
+            if (Input.GetKey(KeyCode.S)) objectRenderer.material = objectMaterial1;
         }
     }
 
