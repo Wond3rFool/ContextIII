@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e729e07d2c199c4d900e9ab2519ecd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToInstantiate1: {fileID: 3665538133218450830, guid: 08cd3b24e69681e48980cde89ce5df7f, type: 3}
+  prefabToInstantiate1: {fileID: 3693614133309260130, guid: a4d1ff8120fe6bf4eb54f1999e03b1d3, type: 3}
   prefabToInstantiate2: {fileID: 6255900296698840986, guid: cf137cc037c7d604dab8bdccaf548d86, type: 3}
 --- !u!1001 &1439286343
 PrefabInstance:
