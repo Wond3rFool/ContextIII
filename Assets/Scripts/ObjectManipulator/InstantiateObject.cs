@@ -7,17 +7,24 @@ public class InstantiateObject : MonoBehaviour
     [SerializeField]
     private GameObject prefabToInstantiate2; // Reference to the prefab you want to instantiate
 
+    private Vector3 mousePosition;
+
     private void Update()
     {
+        mousePosition = Input.mousePosition;
+
+        // Convert the mouse position to a world point
+        Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10f));
+
         if (Input.GetKeyDown(KeyCode.Alpha1)) // Change 'Space' to the desired key
         {
             // Instantiate the prefab at a specific position and rotation
-            Instantiate(prefabToInstantiate1, new Vector3(0, 0, 15), Quaternion.identity);
+            Instantiate(prefabToInstantiate1, spawnPosition, Quaternion.identity);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2)) // Change 'Space' to the desired key
         {
             // Instantiate the prefab at a specific position and rotation
-            Instantiate(prefabToInstantiate2, new Vector3(0, 0, 15), Quaternion.identity);
+            Instantiate(prefabToInstantiate2, spawnPosition, Quaternion.identity);
         }
     }
 }
