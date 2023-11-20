@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ObjectDrag : MonoBehaviour
 {
@@ -37,6 +38,11 @@ public class ObjectDrag : MonoBehaviour
             // Change the material to something else.
             if (Input.GetKey(KeyCode.S)) objectRenderer.material = objectMaterial1;
         }
+        if (Input.GetKey(KeyCode.LeftArrow)) Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x - 10, Input.mousePosition.y));
+        if (Input.GetKey(KeyCode.RightArrow)) Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x + 10, Input.mousePosition.y));
+        if (Input.GetKey(KeyCode.KeypadEnter))  MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
+
+
     }
 
     private void OnMouseDown()
