@@ -18,7 +18,7 @@ public class JoystickCursorControl : MonoBehaviour
         //float joystickX = float.Parse(ArduinoValueReader.Instance.value);
 
         // Adjust the cursor movement based on joystick input
-        //moveDirection.x += joystickX;
+       // moveDirection.x += joystickX;
 
         // Move the cursor
         transform.Translate(moveDirection * cursorSpeed * Time.deltaTime);

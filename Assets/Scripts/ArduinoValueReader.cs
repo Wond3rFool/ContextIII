@@ -5,26 +5,17 @@ using System.IO.Ports;
 
 public class ArduinoValueReader : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject prefabToInstantiate1; // Reference to the prefab you want to instantiate
-    [SerializeField]
-    private GameObject prefabToInstantiate2; // Reference to the prefab you want to instantiate
-    [SerializeField]
-    private GameObject prefabToInstantiate3; // Reference to the prefab you want to instantiate
-    [SerializeField]
-    private GameObject prefabToInstantiate4; // Reference to the prefab you want to instantiate
-    [SerializeField]
-    private GameObject prefabToInstantiate5; // Reference to the prefab you want to instantiate
     public string portName = "COM3";
     public int baudRate = 9600;
-
     private SerialPort sp;
+    private string currentMessage;
+    private string lastMessage; // Added field to store the last received message
 
     void Start()
     {
         sp = new SerialPort(portName, baudRate);
         sp.Open();
-        sp.ReadTimeout = 1;
+        sp.ReadTimeout = 10;
     }
 
     void Update()
@@ -33,34 +24,13 @@ public class ArduinoValueReader : MonoBehaviour
         {
             try
             {
-                string message = sp.ReadLine().Trim(); // Trim removes leading/trailing whitespaces
+                currentMessage = sp.ReadLine().Trim();
 
-                if (!string.IsNullOrEmpty(message))
+                // Check if the current message is different from the last one
+                if (!string.IsNullOrEmpty(currentMessage) && currentMessage != lastMessage)
                 {
-                    int buttonNumber;
-                    if (int.TryParse(message, out buttonNumber))
-                    {
-                        // Handle button presses with use cases
-                        switch (buttonNumber)
-                        {
-                            case 1:
-                                HandleButton1();
-                                break;
-                            case 2:
-                                HandleButton2();
-                                break;
-                            case 3:
-                                HandleButton3();
-                                break;
-                            case 4:
-                                HandleButton4();
-                                break;
-                            case 5:
-                                HandleButton5();
-                                break;
-
-                        }
-                    }
+                    Debug.Log("Received message: " + currentMessage);
+                    lastMessage = currentMessage; // Update the last received message
                 }
             }
             catch (System.Exception)
@@ -70,39 +40,10 @@ public class ArduinoValueReader : MonoBehaviour
         }
     }
 
-    void HandleButton1()
+    // Expose the current message through a method
+    public string GetCurrentMessage()
     {
-        // Add your use case for Button 1 here
-        Debug.Log("Button 1 Pressed");
-        Instantiate(prefabToInstantiate1, new Vector3(0, 0, 15), Quaternion.identity);
-    }
-
-    void HandleButton2()
-    {
-        // Add your use case for Button 2 here
-        Debug.Log("Button 2 Pressed");
-        Instantiate(prefabToInstantiate2, new Vector3(0, 0, 15), Quaternion.identity);
-    }
-
-    void HandleButton3()
-    {
-        // Add your use case for Button 3 here
-        Debug.Log("Button 3 Pressed");
-        Instantiate(prefabToInstantiate3, new Vector3(0, 0, 15), Quaternion.identity);
-    }
-
-    void HandleButton4()
-    {
-        // Add your use case for Button 4 here
-        Debug.Log("Button 4 Pressed");
-        Instantiate(prefabToInstantiate4, new Vector3(0, 0, 15), Quaternion.identity);
-    }
-
-    void HandleButton5()
-    {
-        // Add your use case for Button 5 here
-        Debug.Log("Button 5 Pressed");
-        Instantiate(prefabToInstantiate5, new Vector3(0, 0, 15), Quaternion.identity);
+        return currentMessage;
     }
 
     void OnDestroy()
