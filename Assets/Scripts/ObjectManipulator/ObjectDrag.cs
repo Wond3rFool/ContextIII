@@ -44,7 +44,7 @@ public class ObjectDrag : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.LeftArrow)) Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x - 10, Input.mousePosition.y));
         if (Input.GetKey(KeyCode.RightArrow)) Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x + 10, Input.mousePosition.y));
-        if (Input.GetKey(KeyCode.KeypadEnter))  MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
+        if (Input.GetKey(KeyCode.Space))  MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
 
 
     }

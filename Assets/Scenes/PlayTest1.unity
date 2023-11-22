@@ -1243,6 +1243,37 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &875682819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 875682820}
+  m_Layer: 0
+  m_Name: spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &875682820
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875682819}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &883914545
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,7 +1792,7 @@ GameObject:
   - component: {fileID: 1418089093}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1922,12 +1953,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b8c9a63807119b44b8f06a419000e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToInstantiate1: {fileID: 6749005134947089038, guid: 0db4799885d4a76489c789cb6ec02672, type: 3}
-  prefabToInstantiate2: {fileID: 8138003207039615448, guid: c462d9b2495b7e24c89b43f0cfad9b9b, type: 3}
-  prefabToInstantiate3: {fileID: 8138003207039615448, guid: c462d9b2495b7e24c89b43f0cfad9b9b, type: 3}
-  prefabToInstantiate4: {fileID: 8138003207039615448, guid: c462d9b2495b7e24c89b43f0cfad9b9b, type: 3}
-  prefabToInstantiate5: {fileID: 6749005134947089038, guid: 0db4799885d4a76489c789cb6ec02672, type: 3}
+  objectsToInstantiate:
+  - {fileID: 3693614133309260130, guid: a4d1ff8120fe6bf4eb54f1999e03b1d3, type: 3}
+  - {fileID: 3693614133309260130, guid: a4d1ff8120fe6bf4eb54f1999e03b1d3, type: 3}
+  - {fileID: 3693614133309260130, guid: a4d1ff8120fe6bf4eb54f1999e03b1d3, type: 3}
+  - {fileID: 6255900296698840986, guid: cf137cc037c7d604dab8bdccaf548d86, type: 3}
+  - {fileID: 6255900296698840986, guid: cf137cc037c7d604dab8bdccaf548d86, type: 3}
+  - {fileID: 6255900296698840986, guid: cf137cc037c7d604dab8bdccaf548d86, type: 3}
+  instantiatePosition: {fileID: 875682820}
   arduinoValueReader: {fileID: 1418089092}
+  sensitivity: 5
   mouseSpeed: 5
 --- !u!114 &1418089092
 MonoBehaviour:
@@ -2455,3 +2490,4 @@ SceneRoots:
   - {fileID: 1262119705}
   - {fileID: 513579245}
   - {fileID: 1252828675}
+  - {fileID: 875682820}

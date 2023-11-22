@@ -6,20 +6,20 @@ using UnityEngine.InputSystem;
 public class HandleButton : MonoBehaviour
 {
     [SerializeField]
-    private GameObject prefabToInstantiate1; // Reference to the prefab you want to instantiate
-    [SerializeField]
-    private GameObject prefabToInstantiate2; // Reference to the prefab you want to instantiate
-    [SerializeField]
-    private GameObject prefabToInstantiate3; // Reference to the prefab you want to instantiate
-    [SerializeField]
-    private GameObject prefabToInstantiate4; // Reference to the prefab you want to instantiate
-    [SerializeField]
-    private GameObject prefabToInstantiate5; // Reference to the prefab you want to instantiate
+    public GameObject[] objectsToInstantiate;
+
+    // Set the position where you want to instantiate the objects
+    public Transform instantiatePosition;
 
     // Reference to the ArduinoValueReader script
     public ArduinoValueReader arduinoValueReader;
 
+    // Array to store the button states in the previous frame
+    private bool[] buttonPressedLastFrame;
+
+    public float sensitivity = 5;
     public float mouseSpeed = 5;
+
 
     private bool canSpawn;
 
@@ -31,6 +31,9 @@ public class HandleButton : MonoBehaviour
             Debug.LogError("ArduinoValueReader script not assigned to HandleButton script.");
         }
         canSpawn = true;
+
+        // Initialize the buttonPressedLastFrame array
+        buttonPressedLastFrame = new bool[objectsToInstantiate.Length];
     }
 
     void Update()
@@ -47,65 +50,54 @@ public class HandleButton : MonoBehaviour
 
     void HandleButtonPress(string message)
     {
-        // Parse the button number from the received message
-        if (int.TryParse(message, out int buttonNumber))
-        {
-            if (canSpawn) 
-            {
-                switch (buttonNumber)
-                {
-                    case 0:
-                        canSpawn = true;
-                        break;
-                    case 1:
-                        Instantiate(prefabToInstantiate1, new Vector3(0, 0, 15), Quaternion.identity);
-                        canSpawn = false;
-                        break;
-                    case 2:
-                        Instantiate(prefabToInstantiate2, new Vector3(0, 0, 15), Quaternion.identity);
-                        canSpawn = false;
-                        break;
-                    case 3:
-                        Instantiate(prefabToInstantiate3, new Vector3(0, 0, 15), Quaternion.identity);
-                        canSpawn = false;
-                        break;
-                    case 4:
-                        Instantiate(prefabToInstantiate4, new Vector3(0, 0, 15), Quaternion.identity);
-                        canSpawn = false;
-                        break;
-                    case 5:
-                        Instantiate(prefabToInstantiate5, new Vector3(0, 0, 15), Quaternion.identity);
-                        canSpawn = false;
-                        break;
-                }
-            }
-            // Check if the button number is within the expected range
+        string[] values = message.Split(',');
+        Debug.Log(values.Length);
+        int joystickX = int.Parse(values[0]);
+        int joystickY = int.Parse(values[1]);
+        int joystickButton = int.Parse(values[7]);
 
-            if (buttonNumber == 6)
-            {
-                Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y + mouseSpeed));
-            }
-            if (buttonNumber == 7)
-            {
-                Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x + mouseSpeed, Input.mousePosition.y));
-            }
-            if (buttonNumber == 8)
-            {
-                Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y - mouseSpeed));
-            }
-            if (buttonNumber == 9)
-            {
-                Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x - mouseSpeed, Input.mousePosition.y));
-            }
-            if (buttonNumber == 10)
-            {
-                MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
-                Debug.Log("test");
-            }
-        }
-        else
+        if (joystickX == 1)
         {
-            Debug.LogWarning("Failed to parse the button number from the received message.");
+            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y + mouseSpeed));
         }
+        if (joystickY == 1)
+        {
+            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x + mouseSpeed, Input.mousePosition.y));
+        }
+        if (joystickX == 2)
+        {
+            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y - mouseSpeed));
+        }
+        if (joystickY == 2)
+        {
+            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x - mouseSpeed, Input.mousePosition.y));
+        }
+        if (joystickButton == 0)
+        {
+            MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
+            Debug.Log("test");
+        }
+
+
+        bool[] buttonStates = new bool[objectsToInstantiate.Length];
+
+        for (int i = 0; i < objectsToInstantiate.Length-1; i++)
+        {
+            buttonStates[i] = int.Parse(values[i + 2]) == 0;
+
+            // Instantiate object on button press if the button was not pressed in the last frame
+            if (buttonStates[i] && !buttonPressedLastFrame[i])
+            {
+                Instantiate(objectsToInstantiate[i], instantiatePosition.position, instantiatePosition.rotation);
+            }
+
+            // Update the buttonPressedLastFrame array for the next frame
+            buttonPressedLastFrame[i] = buttonStates[i];
+        }
+
+        // Adjust object movement based on joystick input
+        //Vector3 movement = new Vector3(joystickX, 0, joystickY) * moveSpeed * Time.deltaTime;
+        //transform.Translate(movement);
     }
 }
+
