@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3768994, g: 0.2781828, b: 0.2661612, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -588,6 +588,8 @@ GameObject:
   - component: {fileID: 387471301}
   - component: {fileID: 387471300}
   - component: {fileID: 387471303}
+  - component: {fileID: 387471305}
+  - component: {fileID: 387471306}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -713,6 +715,38 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &387471305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387471299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a5feb1a8ce05fb4497be5a25baeb96e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portName: COM3
+  baudRate: 9600
+--- !u!114 &387471306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387471299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c9a63807119b44b8f06a419000e4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabToInstantiate1: {fileID: 6749005134947089038, guid: 0db4799885d4a76489c789cb6ec02672, type: 3}
+  prefabToInstantiate2: {fileID: 8138003207039615448, guid: c462d9b2495b7e24c89b43f0cfad9b9b, type: 3}
+  prefabToInstantiate3: {fileID: 6749005134947089038, guid: 0db4799885d4a76489c789cb6ec02672, type: 3}
+  prefabToInstantiate4: {fileID: 8138003207039615448, guid: c462d9b2495b7e24c89b43f0cfad9b9b, type: 3}
+  prefabToInstantiate5: {fileID: 8138003207039615448, guid: c462d9b2495b7e24c89b43f0cfad9b9b, type: 3}
+  arduinoValueReader: {fileID: 387471305}
 --- !u!1001 &406232474
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1411,7 +1445,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 817ede81ba682f444a8553e6d1c53476, type: 2}
+  - {fileID: 2100000, guid: c6eeb51c39d808248adf954e3928a425, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7613,7 +7647,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9e471a48885d0dc4295c158c58fa3947, type: 2}
+  - {fileID: 2100000, guid: c6eeb51c39d808248adf954e3928a425, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7984,7 +8018,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 39969b33e2d654a42afbc75ebca564de, type: 2}
+  - {fileID: 2100000, guid: c6eeb51c39d808248adf954e3928a425, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
