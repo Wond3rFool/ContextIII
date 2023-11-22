@@ -24,19 +24,23 @@ public class ObjectDrag : MonoBehaviour
 
     private void Update()
     {
-        if(isDragging)
+        Vector3 forward = Camera.main.transform.forward;
+        forward.y = 0; // Make sure the rotation is only in the horizontal plane
+        forward.Normalize();
+
+        if (isDragging)
         {
             // Needed to move the object around with mouse position.
             transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7));
 
             // Rotate the object with WASD.
-            if (Input.GetKey(KeyCode.A)) transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-            if (Input.GetKey(KeyCode.D)) transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime);
-            if (Input.GetKey(KeyCode.W)) transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime);
-            if (Input.GetKey(KeyCode.S)) transform.Rotate(Vector3.right * -rotationSpeed * Time.deltaTime);
+            if (Input.GetKey(KeyCode.A)) transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.World);
+            if (Input.GetKey(KeyCode.D)) transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime, Space.World);
+            if (Input.GetKey(KeyCode.W)) transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime, Space.World);
+            if (Input.GetKey(KeyCode.S)) transform.Rotate(Vector3.right * -rotationSpeed * Time.deltaTime, Space.World);
 
             // Change the material to something else.
-            if (Input.GetKey(KeyCode.S)) objectRenderer.material = objectMaterial1;
+            if (Input.GetKey(KeyCode.Q)) objectRenderer.material = objectMaterial1;
         }
         if (Input.GetKey(KeyCode.LeftArrow)) Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x - 10, Input.mousePosition.y));
         if (Input.GetKey(KeyCode.RightArrow)) Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x + 10, Input.mousePosition.y));
