@@ -1920,8 +1920,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e729e07d2c199c4d900e9ab2519ecd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToInstantiate1: {fileID: 8192528781214852595, guid: b8c9016c2e2779c4dbf6a6a48a4a2e93, type: 3}
-  prefabToInstantiate2: {fileID: 3665538133218450830, guid: 08cd3b24e69681e48980cde89ce5df7f, type: 3}
+  prefabToInstantiate1: {fileID: 8835450825528419596, guid: 8a6a15752e6f9534e93ec5914973a716, type: 3}
+  prefabToInstantiate2: {fileID: 3062371532290089198, guid: c65b03f3eb1dc604daece3bb70a4ba9c, type: 3}
 --- !u!4 &1537255811 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 441524, guid: ac54d2d6fecb48fe86a84515a8d01eb9, type: 3}
