@@ -12,7 +12,7 @@ public class HandleButton : MonoBehaviour
     public ArduinoValueReader arduinoValueReader;
 
     public int spawnRange;
-
+    private Vector3 mousePosition;
     // Array to store the button states in the previous frame
     private bool[] buttonPressedLastFrame;
 
@@ -79,12 +79,14 @@ public class HandleButton : MonoBehaviour
         for (int i = 0; i < objectsToInstantiate.Length - 1; i++)
         {
             buttonStates[i] = int.Parse(values[i + 2]) == 0;
-            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange);
+            mousePosition = Input.mousePosition;
 
+            // Convert the mouse position to a world point
+            Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, spawnRange));
             // Instantiate object on button press if the button was not pressed in the last frame
             if (buttonStates[i] && !buttonPressedLastFrame[i])
             {
-                Instantiate(objectsToInstantiate[i], mousePosition, Quaternion.identity);
+                Instantiate(objectsToInstantiate[i], spawnPosition, Quaternion.identity);
             }
 
             // Update the buttonPressedLastFrame array for the next frame
