@@ -15,6 +15,7 @@ public class HandleButton : MonoBehaviour
     private Vector3 mousePosition;
     // Array to store the button states in the previous frame
     private bool[] buttonPressedLastFrame;
+    private string[] values;
 
     public float sensitivity = 5;
     public float mouseSpeed = 5;
@@ -46,9 +47,11 @@ public class HandleButton : MonoBehaviour
         }
     }
 
+
+
     void HandleButtonPress(string message)
     {
-        string[] values = message.Split(',');
+        values = message.Split(',');
         Debug.Log(values.Length);
 
         // Check button states on pins 7 to 11
@@ -91,6 +94,19 @@ public class HandleButton : MonoBehaviour
 
             // Update the buttonPressedLastFrame array for the next frame
             buttonPressedLastFrame[i] = buttonStates[i];
+        }
+    }
+
+    public string[] GetValue()
+    {
+        if (values != null && values.Length >= 1)
+        {
+            return values;
+        }
+        else
+        {
+            Debug.LogError("No values received yet.");
+            return null;
         }
     }
 }
