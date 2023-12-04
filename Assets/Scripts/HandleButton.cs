@@ -8,11 +8,10 @@ public class HandleButton : MonoBehaviour
     [SerializeField]
     public GameObject[] objectsToInstantiate;
 
-    // Set the position where you want to instantiate the objects
-    public Transform instantiatePosition;
-
     // Reference to the ArduinoValueReader script
     public ArduinoValueReader arduinoValueReader;
+
+    public int spawnRange;
 
     // Array to store the button states in the previous frame
     private bool[] buttonPressedLastFrame;
@@ -84,11 +83,12 @@ public class HandleButton : MonoBehaviour
         for (int i = 0; i < objectsToInstantiate.Length-1; i++)
         {
             buttonStates[i] = int.Parse(values[i + 2]) == 0;
+            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange);
 
             // Instantiate object on button press if the button was not pressed in the last frame
             if (buttonStates[i] && !buttonPressedLastFrame[i])
             {
-                Instantiate(objectsToInstantiate[i], instantiatePosition.position, instantiatePosition.rotation);
+                Instantiate(objectsToInstantiate[i], mousePosition, Quaternion.identity);
             }
 
             // Update the buttonPressedLastFrame array for the next frame
