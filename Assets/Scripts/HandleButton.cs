@@ -19,7 +19,6 @@ public class HandleButton : MonoBehaviour
     public float sensitivity = 5;
     public float mouseSpeed = 5;
 
-
     private bool canSpawn;
 
     void Start()
@@ -51,36 +50,33 @@ public class HandleButton : MonoBehaviour
     {
         string[] values = message.Split(',');
         Debug.Log(values.Length);
-        int joystickX = int.Parse(values[0]);
-        int joystickY = int.Parse(values[1]);
-        int joystickButton = int.Parse(values[7]);
 
-        if (joystickX == 1)
+        // Check button states on pins 7 to 11
+        if (values[8] == "0") // Button on pin 8 pressed
         {
             Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y + mouseSpeed));
         }
-        if (joystickY == 1)
+        if (values[7] == "0") // Button on pin 7 pressed
         {
             Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x + mouseSpeed, Input.mousePosition.y));
         }
-        if (joystickX == 2)
+        if (values[10] == "0") // Button on pin 10 pressed
         {
             Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y - mouseSpeed));
         }
-        if (joystickY == 2)
+        if (values[9] == "0") // Button on pin 9 pressed
         {
             Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x - mouseSpeed, Input.mousePosition.y));
         }
-        if (joystickButton == 0)
+        if (values[11] == "0") // Button on pin 11 pressed
         {
             MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
             Debug.Log("test");
         }
 
-
         bool[] buttonStates = new bool[objectsToInstantiate.Length];
 
-        for (int i = 0; i < objectsToInstantiate.Length-1; i++)
+        for (int i = 0; i < objectsToInstantiate.Length - 1; i++)
         {
             buttonStates[i] = int.Parse(values[i + 2]) == 0;
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange);
@@ -94,10 +90,5 @@ public class HandleButton : MonoBehaviour
             // Update the buttonPressedLastFrame array for the next frame
             buttonPressedLastFrame[i] = buttonStates[i];
         }
-
-        // Adjust object movement based on joystick input
-        //Vector3 movement = new Vector3(joystickX, 0, joystickY) * moveSpeed * Time.deltaTime;
-        //transform.Translate(movement);
     }
 }
-
