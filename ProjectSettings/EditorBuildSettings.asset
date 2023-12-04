@@ -4,6 +4,12 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/prototypeScenes/MaterialPhase.unity
+    guid: b567d2798624f8a4b87447b66dd37965
+  - enabled: 1
+    path: Assets/Scenes/prototypeScenes/PresentationPhase.unity
+    guid: d8c077ee308ad0143b4eaa0a92b22b70
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}

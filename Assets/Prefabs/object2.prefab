@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7665454108485885816}
   - component: {fileID: 2792114405046609020}
   - component: {fileID: 5243622821469837934}
+  - component: {fileID: -6715489811548443851}
   m_Layer: 0
   m_Name: object2
   m_TagString: SnapObject
@@ -161,3 +162,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapDistance: 2
+--- !u!114 &-6715489811548443851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6255900296698840986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ceb191b3fb2d01499820c7bba543d53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
