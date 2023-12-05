@@ -8,19 +8,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SkectchShaderMaterial
-  m_Shader: {fileID: 4800000, guid: e88aeddd2ef1f934d805981244872e27, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 529395d951cfdcf4db32c3d11c1ccb0c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _HALFTONESHAPE_DOT
-  m_InvalidKeywords:
   - _OVERLAY
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2050
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -118,12 +116,24 @@ Material:
         m_Texture: {fileID: 2800000, guid: fe62e2f6abad5ac4bb5f5e21acc376e2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_afd34d1af7e8498f9300d30c39e62ddf_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 2d15c461010abe84f97cf4ea28802b56, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_c3141f3c4828476491ab214c945970a6_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 2d15c461010abe84f97cf4ea28802b56, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_c9219de1cd9f4c47a4a9a51dd980e4b2_Texture_1_Texture2D:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_d910eacdc6e042fbaeeba5d720dfa291_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: fe62e2f6abad5ac4bb5f5e21acc376e2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d92fb4773c464caebe5a1fc2b6ce2aa8_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: cfab25b9785686948bc3c5038c508718, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -165,6 +175,7 @@ Material:
     - _BrushLowerCut: 0
     - _BrushSize: 0.8
     - _BumpScale: 1
+    - _ColorThreshold: 10
     - _ColorValues: 6.34
     - _Cull: 2
     - _Cutoff: 0.5
@@ -200,7 +211,7 @@ Material:
     - _METALNESS: 0
     - _NoiseScale: 1
     - _NoiseStrength: 0.1
-    - _Normal_Threshold: 1.69
+    - _Normal_Threshold: 1.3
     - _OPACITY: 1
     - _OVERLAY: 1
     - _OutlineEnabled: 0
@@ -216,7 +227,7 @@ Material:
     - _RimPower: 0.55
     - _SPECULAR_IOR: 1.5
     - _SPECULAR_ROUGHNESS: 0
-    - _ShaderOn: 0
+    - _ShaderOn: 5.4
     - _Shininess: 0
     - _SizeFalloff: 0
     - _Smoothness: 0.5
@@ -241,7 +252,7 @@ Material:
     - Vector2_8F4F7BC: {r: 1, g: 1, b: 0, a: 0}
     - _BASE_COLOR: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.01886791, g: 0.018394131, b: 0.017515117, a: 0}
+    - _Color: {r: 0, g: 0, b: 0, a: 0}
     - _EMISSION_COLOR: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FaceFrontDirection: {r: 0, g: 0, b: 1, a: 0}
@@ -249,8 +260,9 @@ Material:
     - _HairSpecColor: {r: 0, g: 0, b: 0, a: 1}
     - _HalfToneColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineC: {r: 0.3207547, g: 0.17296545, b: 0.0072623612, a: 0}
+    - _OutlineC: {r: 0.6886792, g: 0.36383054, b: 0, a: 0}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 0.27450982}
+    - _OutlineColour: {r: 1, g: 1, b: 1, a: 0}
     - _OutlineDistancFade: {r: -25, g: 50, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SPECULAR_COLOR: {r: 1, g: 1, b: 1, a: 0}
