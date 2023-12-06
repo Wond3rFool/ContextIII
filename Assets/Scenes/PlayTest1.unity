@@ -1960,10 +1960,11 @@ MonoBehaviour:
   - {fileID: 6255900296698840986, guid: cf137cc037c7d604dab8bdccaf548d86, type: 3}
   - {fileID: 6255900296698840986, guid: cf137cc037c7d604dab8bdccaf548d86, type: 3}
   - {fileID: 6255900296698840986, guid: cf137cc037c7d604dab8bdccaf548d86, type: 3}
-  instantiatePosition: {fileID: 875682820}
   arduinoValueReader: {fileID: 1418089092}
+  spawnRange: 7
   sensitivity: 5
   mouseSpeed: 5
+  objectRotationSpeed: 90
 --- !u!114 &1418089092
 MonoBehaviour:
   m_ObjectHideFlags: 0

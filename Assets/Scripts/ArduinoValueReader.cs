@@ -29,7 +29,7 @@ public class ArduinoValueReader : MonoBehaviour
                 // Check if the current message is different from the last one
                 if (!string.IsNullOrEmpty(currentMessage) && currentMessage != lastMessage)
                 {
-                    Debug.Log("Received message: " + currentMessage);
+                    //Debug.Log("Received message: " + currentMessage);
                     lastMessage = currentMessage; // Update the last received message
                 }
             }

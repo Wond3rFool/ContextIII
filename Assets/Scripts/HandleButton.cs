@@ -42,12 +42,13 @@ public class HandleButton : MonoBehaviour
 
         if (!string.IsNullOrEmpty(message))
         {
+            values = message.Split(',');
             HandleButtonPress(message);
-            Debug.Log(message);
         }
 
-        if (lastClickedObject != null && !string.IsNullOrEmpty(message))
+        if (lastClickedObject != null && values.Length > 0)
         {
+            Debug.Log(lastClickedObject);
             // Update the rotation of the last clicked object
             if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
             if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
@@ -61,7 +62,6 @@ public class HandleButton : MonoBehaviour
     void HandleButtonPress(string message)
     {
         values = message.Split(',');
-        Debug.Log(values.Length);
 
         // Check button states on pins 7 to 11
         if (values[8] == "0") // Button on pin 8 pressed
@@ -83,6 +83,7 @@ public class HandleButton : MonoBehaviour
         if (values[11] == "0") // Button on pin 11 pressed
         {
             MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
+
             lastClickedObject = CheckForObjectClick();
         }
 
@@ -126,7 +127,9 @@ public class HandleButton : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            return hit.collider.gameObject; // Return the clicked object
+            ObjectDrag clickedObject = hit.collider.gameObject.GetComponent<ObjectDrag>();
+
+            return clickedObject.gameObject; // Return the clicked object
         }
 
         return null; // Return null if no object is clicked
