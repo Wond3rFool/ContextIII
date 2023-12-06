@@ -13,6 +13,7 @@ public class HandleButton : MonoBehaviour
 
     public int spawnRange;
     private Vector3 mousePosition;
+    private GameObject lastClickedObject;
     // Array to store the button states in the previous frame
     private bool[] buttonPressedLastFrame;
     private string[] values;
@@ -20,7 +21,7 @@ public class HandleButton : MonoBehaviour
     public float sensitivity = 5;
     public float mouseSpeed = 5;
 
-    private bool canSpawn;
+    public float objectRotationSpeed;
 
     void Start()
     {
@@ -29,7 +30,6 @@ public class HandleButton : MonoBehaviour
         {
             Debug.LogError("ArduinoValueReader script not assigned to HandleButton script.");
         }
-        canSpawn = true;
 
         // Initialize the buttonPressedLastFrame array
         buttonPressedLastFrame = new bool[objectsToInstantiate.Length];
@@ -44,6 +44,15 @@ public class HandleButton : MonoBehaviour
         {
             HandleButtonPress(message);
             Debug.Log(message);
+        }
+
+        if (lastClickedObject != null && !string.IsNullOrEmpty(message))
+        {
+            // Update the rotation of the last clicked object
+            if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
+            if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
+            if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
+            if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
         }
     }
 
@@ -74,7 +83,7 @@ public class HandleButton : MonoBehaviour
         if (values[11] == "0") // Button on pin 11 pressed
         {
             MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
-            Debug.Log("test");
+            lastClickedObject = CheckForObjectClick();
         }
 
         bool[] buttonStates = new bool[objectsToInstantiate.Length];
@@ -108,5 +117,18 @@ public class HandleButton : MonoBehaviour
             Debug.LogError("No values received yet.");
             return null;
         }
+    }
+
+    GameObject CheckForObjectClick()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            return hit.collider.gameObject; // Return the clicked object
+        }
+
+        return null; // Return null if no object is clicked
     }
 }
