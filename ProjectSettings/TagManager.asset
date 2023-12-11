@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - SnapObject
+  - Selectable
   layers:
   - Default
   - TransparentFX
