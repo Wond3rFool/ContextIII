@@ -16,7 +16,13 @@ public class HandleButton : MonoBehaviour
     private GameObject lastClickedObject;
     // Array to store the button states in the previous frame
     private bool[] buttonPressedLastFrame;
+    private bool isDesignPhase;
+    private bool isMaterialPhase;
+    private bool isColourPhase;
     private string[] values;
+
+    [SerializeField]
+    private Transform[] phasePositions;
 
     public float sensitivity = 5;
     public float mouseSpeed = 5;
@@ -33,6 +39,11 @@ public class HandleButton : MonoBehaviour
 
         // Initialize the buttonPressedLastFrame array
         buttonPressedLastFrame = new bool[objectsToInstantiate.Length];
+
+        isDesignPhase = true;
+        isMaterialPhase = false;
+        isColourPhase = false;
+
     }
 
     void Update()
@@ -45,17 +56,51 @@ public class HandleButton : MonoBehaviour
             HandleButtonPress(message);
             Debug.Log(message);
         }
-
-        if (lastClickedObject != null && !string.IsNullOrEmpty(message))
+        if (isDesignPhase)
         {
-            // Update the rotation of the last clicked object
-            if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
-            if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
-            if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
-            if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
+            transform.position = Vector3.Lerp(transform.position, phasePositions[0].position, 0.6f * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[0].rotation, 0.6f  * Time.deltaTime);
+            if (lastClickedObject != null)
+            {
+                // Update the rotation of the last clicked object
+                if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
+                if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
+                if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
+                if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
+            }
+        }
+        if (isMaterialPhase) 
+        {
+            transform.position = Vector3.Lerp(transform.position, phasePositions[1].position, 0.6f* Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[1].rotation, 0.6f * Time.deltaTime);
+        }
+
+        if(isColourPhase) 
+        {
+            transform.position = Vector3.Lerp(transform.position, phasePositions[2].position, 0.6f * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[2].rotation, 0.6f * Time.deltaTime);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
+            if (isDesignPhase) 
+            {
+                isDesignPhase = false;
+                isMaterialPhase = true;
+            }
+            else if (isMaterialPhase)
+            {
+                isMaterialPhase = false;
+                isColourPhase = true;
+            }
+            else if(isColourPhase) 
+            {
+                isColourPhase = false;
+                isDesignPhase = true;
+            }
         }
     }
-
 
 
     void HandleButtonPress(string message)
