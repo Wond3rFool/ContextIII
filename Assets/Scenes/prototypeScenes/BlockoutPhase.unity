@@ -320,6 +320,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7609145667655734672, guid: 9eb5c93c3d82a7f4f941538c6e01c63c, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
+    - target: {fileID: -7235015103121818086, guid: 9eb5c93c3d82a7f4f941538c6e01c63c, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
+    - target: {fileID: -3957782524123411102, guid: 9eb5c93c3d82a7f4f941538c6e01c63c, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
     - target: {fileID: -3901992563441801604, guid: 9eb5c93c3d82a7f4f941538c6e01c63c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -332,6 +344,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0b715a7c547c01d4ea11cf5ab0a2646c, type: 2}
+    - target: {fileID: -344004081357383697, guid: 9eb5c93c3d82a7f4f941538c6e01c63c, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
+    - target: {fileID: -8140499575222096, guid: 9eb5c93c3d82a7f4f941538c6e01c63c, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9eb5c93c3d82a7f4f941538c6e01c63c, type: 3}
       propertyPath: m_Name
       value: Dome Blockout dingest
@@ -547,6 +567,7 @@ MonoBehaviour:
   - {fileID: 2046783876}
   - {fileID: 1949871881}
   - {fileID: 2022631515}
+  materials: []
   sensitivity: 5
   mouseSpeed: 5
   objectRotationSpeed: 90

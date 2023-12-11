@@ -30,10 +30,6 @@ public class BareBonesDrag : MonoBehaviour
             // Needed to move the object around with mouse position.
             transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 15));
 
-            // Rotate the object with WASD.
-
-            // Change the material to something else.
-            //if (Input.GetKey(KeyCode.Q)) objectRenderer.material = objectMaterial1;
         }
         if (Input.GetKey(KeyCode.LeftArrow)) Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x - 10, Input.mousePosition.y));
         if (Input.GetKey(KeyCode.RightArrow)) Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x + 10, Input.mousePosition.y));
