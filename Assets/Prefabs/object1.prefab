@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3584287679530655604}
   - component: {fileID: 6588740686569285802}
   - component: {fileID: 3627323233113439746}
-  - component: {fileID: 1148066235312135909}
   - component: {fileID: -4933085397023133737}
   m_Layer: 0
   m_Name: object1
@@ -149,19 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
---- !u!114 &1148066235312135909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3693614133309260130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55c3d090cd3b74b4c86741c55d397d8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  snapDistance: 2
 --- !u!114 &-4933085397023133737
 MonoBehaviour:
   m_ObjectHideFlags: 0

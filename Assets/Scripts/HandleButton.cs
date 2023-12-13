@@ -29,7 +29,7 @@ public class HandleButton : MonoBehaviour
     private Material[] materials;
 
     [SerializeField]
-    private Color[] colours;    
+    private Color[] colours;
 
     public float sensitivity = 5;
     public float mouseSpeed = 5;
@@ -63,17 +63,22 @@ public class HandleButton : MonoBehaviour
             values = message.Split(',');
             HandleButtonPress(message);
         }
+        HandleButtonPressNoArduino();
         if (isDesignPhase)
         {
             transform.position = Vector3.Lerp(transform.position, phasePositions[0].position, 0.6f * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[0].rotation, 0.6f * Time.deltaTime);
             if (lastClickedObject != null)
             {
-                // Update the rotation of the last clicked object
-                if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
-                if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
-                if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
-                if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
+                if (values != null)
+                {
+                    // Update the rotation of the last clicked object
+                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
+                }
+
 
                 if (Input.GetKeyDown(KeyCode.UpArrow)) lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
                 if (Input.GetKeyDown(KeyCode.DownArrow)) lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
@@ -117,9 +122,6 @@ public class HandleButton : MonoBehaviour
 
     void HandleButtonPress(string message)
     {
-        values = message.Split(',');
-
-
         // Check button states on pins 7 to 11
         if (values[3] == "0") // Button on pin 8 pressed
         {
@@ -145,17 +147,17 @@ public class HandleButton : MonoBehaviour
         }
 
 
-        if (isDesignPhase) 
+        if (isDesignPhase)
         {
             bool[] buttonStates = new bool[objectsToInstantiate.Length];
 
             for (int i = 0; i < objectsToInstantiate.Length - 1; i++)
             {
-                buttonStates[i] = int.Parse(values[i + 6]) == 1;
-                mousePosition = Input.mousePosition;
+                buttonStates[i] = int.Parse(values[i + 7]) == 1;
 
                 // Convert the mouse position to a world point
-                Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, spawnRange));
+                Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
+
                 // Instantiate object on button press if the button was not pressed in the last frame
                 if (buttonStates[i] && !buttonPressedLastFrame[i])
                 {
@@ -165,23 +167,18 @@ public class HandleButton : MonoBehaviour
                 // Update the buttonPressedLastFrame array for the next frame
                 buttonPressedLastFrame[i] = buttonStates[i];
             }
-            Vector3 spawnP= Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, spawnRange));
-            if (Input.GetKeyDown(KeyCode.Alpha1)) Instantiate(objectsToInstantiate[0], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha2)) Instantiate(objectsToInstantiate[1], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha3)) Instantiate(objectsToInstantiate[2], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha4)) Instantiate(objectsToInstantiate[3], spawnP, Quaternion.identity);
-
         }
-        if (isMaterialPhase) 
+
+        if (isMaterialPhase)
         {
-            if (lastClickedObject != null) 
+            if (lastClickedObject != null)
             {
                 bool[] buttonStates = new bool[materials.Length];
 
                 for (int i = 0; i < materials.Length - 1; i++)
                 {
-                    buttonStates[i] = int.Parse(values[i + 6]) == 1;
-                   
+                    buttonStates[i] = int.Parse(values[i + 7]) == 1;
+
                     // Instantiate object on button press if the button was not pressed in the last frame
                     if (buttonStates[i] && !buttonPressedLastFrame[i])
                     {
@@ -191,16 +188,10 @@ public class HandleButton : MonoBehaviour
                     // Update the buttonPressedLastFrame array for the next frame
                     buttonPressedLastFrame[i] = buttonStates[i];
                 }
-
-
-                if(Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponent<Renderer>().material = materials[0];
-                if(Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponent<Renderer>().material = materials[1];
-                if(Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponent<Renderer>().material = materials[2];
-                if(Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponent<Renderer>().material = materials[3];
             }
         }
 
-        if(isColourPhase) 
+        if (isColourPhase)
         {
             if (lastClickedObject != null)
             {
@@ -208,7 +199,7 @@ public class HandleButton : MonoBehaviour
 
                 for (int i = 0; i < colours.Length - 1; i++)
                 {
-                    buttonStates[i] = int.Parse(values[i + 6]) == 1;
+                    buttonStates[i] = int.Parse(values[i + 7]) == 1;
 
                     // Instantiate object on button press if the button was not pressed in the last frame
                     if (buttonStates[i] && !buttonPressedLastFrame[i])
@@ -219,13 +210,48 @@ public class HandleButton : MonoBehaviour
                     // Update the buttonPressedLastFrame array for the next frame
                     buttonPressedLastFrame[i] = buttonStates[i];
                 }
-
-                
-                if (Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
-                if (Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
-                if (Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
-                if (Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
             }
+        }
+    }
+
+    void HandleButtonPressNoArduino()
+    {
+        if (Input.GetMouseButton(0)) // Button on pin 11 pressed
+        {
+
+            lastClickedObject = CheckForObjectClick();
+        }
+
+
+        if (isDesignPhase)
+        {
+            // Check keyboard input for object instantiation
+            Vector3 spawnP = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
+            if (Input.GetKeyDown(KeyCode.Alpha1)) Instantiate(objectsToInstantiate[0], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) Instantiate(objectsToInstantiate[1], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) Instantiate(objectsToInstantiate[2], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha4)) Instantiate(objectsToInstantiate[3], spawnP, Quaternion.identity);
+        }
+
+        if (isMaterialPhase)
+        {
+
+            if (Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponent<Renderer>().material = materials[0];
+            if (Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponent<Renderer>().material = materials[1];
+            if (Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponent<Renderer>().material = materials[2];
+            if (Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponent<Renderer>().material = materials[3];
+
+        }
+
+        if (isColourPhase)
+        {
+
+
+            if (Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
+            if (Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
+            if (Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
+            if (Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
+
 
         }
     }
