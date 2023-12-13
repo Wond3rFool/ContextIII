@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,7 @@ public class HandleButton : MonoBehaviour
     private bool isMaterialPhase;
     private bool isColourPhase;
     private string[] values;
+    private float spawnTimer;
 
     [SerializeField]
     private Transform[] phasePositions;
@@ -50,13 +52,14 @@ public class HandleButton : MonoBehaviour
         isDesignPhase = true;
         isMaterialPhase = false;
         isColourPhase = false;
-
+        spawnTimer = 0;
     }
 
     void Update()
     {
         // Get the received message from ArduinoValueReader script
         string message = arduinoValueReader.GetCurrentMessage();
+        spawnTimer += Time.deltaTime;
 
         if (!string.IsNullOrEmpty(message))
         {
@@ -158,9 +161,10 @@ public class HandleButton : MonoBehaviour
                 Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
 
                 // Instantiate object on button press if the button was not pressed in the last frame
-                if (buttonStates[i] && !buttonPressedLastFrame[i])
+                if (buttonStates[i] && spawnTimer > 3)
                 {
                     Instantiate(objectsToInstantiate[i], spawnPosition, Quaternion.identity);
+                    spawnTimer = 0;
                 }
 
                 // Update the buttonPressedLastFrame array for the next frame
