@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,9 @@ public class HandleButton : MonoBehaviour
 
     [SerializeField]
     private Material[] materials;
+
+    [SerializeField]
+    private Color[] colours;    
 
     public float sensitivity = 5;
     public float mouseSpeed = 5;
@@ -70,6 +74,11 @@ public class HandleButton : MonoBehaviour
                 if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
                 if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
                 if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
+
+                if (Input.GetKeyDown(KeyCode.UpArrow)) lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKeyDown(KeyCode.DownArrow)) lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKeyDown(KeyCode.LeftArrow)) lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKeyDown(KeyCode.RightArrow)) lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
             }
         }
         if (isMaterialPhase)
@@ -116,7 +125,7 @@ public class HandleButton : MonoBehaviour
         {
             Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y + mouseSpeed));
         }
-        if (values[4] == "0") // Button on pin 7 pressed
+        if (values[2] == "0") // Button on pin 7 pressed
         {
             Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x + mouseSpeed, Input.mousePosition.y));
         }
@@ -124,11 +133,11 @@ public class HandleButton : MonoBehaviour
         {
             Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y - mouseSpeed));
         }
-        if (values[6] == "0") // Button on pin 9 pressed
+        if (values[4] == "0") // Button on pin 9 pressed
         {
             Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x - mouseSpeed, Input.mousePosition.y));
         }
-        if (values[7] == "0") // Button on pin 11 pressed
+        if (values[6] == "0") // Button on pin 11 pressed
         {
             MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
 
@@ -142,7 +151,7 @@ public class HandleButton : MonoBehaviour
 
             for (int i = 0; i < objectsToInstantiate.Length - 1; i++)
             {
-                buttonStates[i] = int.Parse(values[i + 7]) == 0;
+                buttonStates[i] = int.Parse(values[i + 6]) == 1;
                 mousePosition = Input.mousePosition;
 
                 // Convert the mouse position to a world point
@@ -156,11 +165,34 @@ public class HandleButton : MonoBehaviour
                 // Update the buttonPressedLastFrame array for the next frame
                 buttonPressedLastFrame[i] = buttonStates[i];
             }
+            Vector3 spawnP= Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, spawnRange));
+            if (Input.GetKeyDown(KeyCode.Alpha1)) Instantiate(objectsToInstantiate[0], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) Instantiate(objectsToInstantiate[1], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) Instantiate(objectsToInstantiate[2], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha4)) Instantiate(objectsToInstantiate[3], spawnP, Quaternion.identity);
+
         }
         if (isMaterialPhase) 
         {
             if (lastClickedObject != null) 
             {
+                bool[] buttonStates = new bool[materials.Length];
+
+                for (int i = 0; i < materials.Length - 1; i++)
+                {
+                    buttonStates[i] = int.Parse(values[i + 6]) == 1;
+                   
+                    // Instantiate object on button press if the button was not pressed in the last frame
+                    if (buttonStates[i] && !buttonPressedLastFrame[i])
+                    {
+                        lastClickedObject.GetComponent<Renderer>().material = materials[i];
+                    }
+
+                    // Update the buttonPressedLastFrame array for the next frame
+                    buttonPressedLastFrame[i] = buttonStates[i];
+                }
+
+
                 if(Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponent<Renderer>().material = materials[0];
                 if(Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponent<Renderer>().material = materials[1];
                 if(Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponent<Renderer>().material = materials[2];
@@ -170,7 +202,31 @@ public class HandleButton : MonoBehaviour
 
         if(isColourPhase) 
         {
-        
+            if (lastClickedObject != null)
+            {
+                bool[] buttonStates = new bool[colours.Length];
+
+                for (int i = 0; i < colours.Length - 1; i++)
+                {
+                    buttonStates[i] = int.Parse(values[i + 6]) == 1;
+
+                    // Instantiate object on button press if the button was not pressed in the last frame
+                    if (buttonStates[i] && !buttonPressedLastFrame[i])
+                    {
+                        lastClickedObject.GetComponent<Renderer>().material.color = colours[i];
+                    }
+
+                    // Update the buttonPressedLastFrame array for the next frame
+                    buttonPressedLastFrame[i] = buttonStates[i];
+                }
+
+                
+                if (Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
+                if (Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
+                if (Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
+                if (Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
+            }
+
         }
     }
 
@@ -182,7 +238,7 @@ public class HandleButton : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No values received yet.");
+            Debug.Log("No values received yet.");
             return null;
         }
     }

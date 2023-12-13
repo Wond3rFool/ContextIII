@@ -5,7 +5,7 @@ using System.IO.Ports;
 
 public class ArduinoValueReader : MonoBehaviour
 {
-    public string portName = "COM3";
+    public string portName = "COM4";
     public int baudRate = 9600;
     private SerialPort sp;
     private string currentMessage;
@@ -29,7 +29,7 @@ public class ArduinoValueReader : MonoBehaviour
                 // Check if the current message is different from the last one
                 if (!string.IsNullOrEmpty(currentMessage) && currentMessage != lastMessage)
                 {
-                    //Debug.Log("Received message: " + currentMessage);
+                    Debug.Log("Received message: " + currentMessage);
                     lastMessage = currentMessage; // Update the last received message
                 }
             }
