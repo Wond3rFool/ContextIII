@@ -7,11 +7,13 @@ public class ObjectDrag : MonoBehaviour
     private Camera cam;
 
     private bool isDragging;
+    private bool canPlay;
     private Vector3 offset;
 
     private void Start()
     {
         isDragging = false;
+        canPlay = true;
         cam = FindAnyObjectByType<Camera>();
     }
 
@@ -34,12 +36,20 @@ public class ObjectDrag : MonoBehaviour
 
         // Start dragging
         isDragging = true;
+
+        if (canPlay) 
+        {
+            canPlay = false;
+        }
+
+        
     }
 
     private void OnMouseUp()
     {
         // Stop dragging
         isDragging = false;
+        canPlay = true;
     }
 
 }

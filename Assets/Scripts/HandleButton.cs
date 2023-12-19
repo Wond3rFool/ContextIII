@@ -155,7 +155,7 @@ public class HandleButton : MonoBehaviour
 
             for (int i = 0; i < objectsToInstantiate.Length - 1; i++)
             {
-                buttonStates[i] = int.Parse(values[i + 7]) == 1;
+                buttonStates[i] = int.Parse(values[i + 9]) == 1;
 
                 // Convert the mouse position to a world point
                 Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
@@ -180,7 +180,7 @@ public class HandleButton : MonoBehaviour
 
                 for (int i = 0; i < materials.Length - 1; i++)
                 {
-                    buttonStates[i] = int.Parse(values[i + 7]) == 1;
+                    buttonStates[i] = int.Parse(values[i + 9]) == 1;
 
                     // Instantiate object on button press if the button was not pressed in the last frame
                     if (buttonStates[i] && !buttonPressedLastFrame[i])
@@ -202,7 +202,7 @@ public class HandleButton : MonoBehaviour
 
                 for (int i = 0; i < colours.Length - 1; i++)
                 {
-                    buttonStates[i] = int.Parse(values[i + 7]) == 1;
+                    buttonStates[i] = int.Parse(values[i + 9]) == 1;
 
                     // Instantiate object on button press if the button was not pressed in the last frame
                     if (buttonStates[i] && !buttonPressedLastFrame[i])
