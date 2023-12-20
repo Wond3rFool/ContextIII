@@ -148,7 +148,7 @@ public class HandleButton : MonoBehaviour
         {
             bool[] buttonStates = new bool[objectsToInstantiate.Length];
 
-            for (int i = 0; i < objectsToInstantiate.Length - 1; i++)
+            for (int i = 0; i < objectsToInstantiate.Length; i++)
             {
                 buttonStates[i] = int.Parse(values[i + 9]) == 1;
 
@@ -159,6 +159,7 @@ public class HandleButton : MonoBehaviour
                 if (buttonStates[i] && spawnTimer > 3)
                 {
                     Instantiate(objectsToInstantiate[i], spawnPosition, Quaternion.identity);
+                    Debug.Log(objectsToInstantiate[i].name);
                     spawnTimer = 0;
                 }
 
