@@ -193,7 +193,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5153985447044347301, guid: ab950740182ee2742a566d86472668ac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.47
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153985447044347301, guid: ab950740182ee2742a566d86472668ac, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -343,7 +347,7 @@ Transform:
   m_GameObject: {fileID: 158513111}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.99839175, z: -0.056692794, w: 0}
-  m_LocalPosition: {x: -3.41, y: 1.51, z: -15.08}
+  m_LocalPosition: {x: -3.62, y: -0.4, z: -8.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -590,7 +594,7 @@ MonoBehaviour:
   - {fileID: 6255900296698840986, guid: cf137cc037c7d604dab8bdccaf548d86, type: 3}
   - {fileID: 3693614133309260130, guid: a4d1ff8120fe6bf4eb54f1999e03b1d3, type: 3}
   arduinoValueReader: {fileID: 1015726226}
-  spawnRange: 12
+  spawnRange: 7
   phasePositions:
   - {fileID: 158513112}
   - {fileID: 2046783876}
@@ -797,13 +801,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046783875}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99652946, z: -0, w: 0.08324088}
-  m_LocalPosition: {x: -5.16, y: -5.52, z: -5.74}
+  m_LocalRotation: {x: -0, y: 0.99839175, z: -0.056692794, w: 0}
+  m_LocalPosition: {x: -3.62, y: -0.5, z: -9.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 728551927}
-  m_LocalEulerAnglesHint: {x: 0, y: 170.45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

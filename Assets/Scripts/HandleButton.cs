@@ -51,7 +51,6 @@ public class HandleButton : MonoBehaviour
 
         isDesignPhase = true;
         isMaterialPhase = false;
-        isColourPhase = false;
         spawnTimer = 0;
     }
 
@@ -76,10 +75,10 @@ public class HandleButton : MonoBehaviour
                 if (values != null)
                 {
                     // Update the rotation of the last clicked object
-                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
-                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
-                    if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
-                    if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.Self);
+                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.Self);
+                    if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.Self);
+                    if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.Self);
                 }
 
                 if (Input.GetKey(KeyCode.UpArrow)) lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
@@ -98,26 +97,6 @@ public class HandleButton : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, phasePositions[2].position, 0.6f * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[2].rotation, 0.6f * Time.deltaTime);
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (isDesignPhase)
-            {
-                isDesignPhase = false;
-                isMaterialPhase = true;
-            }
-            else if (isMaterialPhase)
-            {
-                isMaterialPhase = false;
-                isColourPhase = true;
-            }
-            else if (isColourPhase)
-            {
-                isColourPhase = false;
-                isDesignPhase = true;
-            }
         }
     }
 
@@ -146,6 +125,22 @@ public class HandleButton : MonoBehaviour
             MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
 
             lastClickedObject = CheckForObjectClick();
+        }
+        if (values[7] == "0") 
+        {
+            if (isDesignPhase)
+            {
+                isDesignPhase = false;
+                isMaterialPhase = true;
+            }
+        }
+        if (values[8] == "0") 
+        {
+            if (isMaterialPhase)
+            {
+                isMaterialPhase = false;
+                isDesignPhase = true;
+            }
         }
 
 
@@ -186,28 +181,6 @@ public class HandleButton : MonoBehaviour
                     if (buttonStates[i] && !buttonPressedLastFrame[i])
                     {
                         lastClickedObject.GetComponent<Renderer>().material = materials[i];
-                    }
-
-                    // Update the buttonPressedLastFrame array for the next frame
-                    buttonPressedLastFrame[i] = buttonStates[i];
-                }
-            }
-        }
-
-        if (isColourPhase)
-        {
-            if (lastClickedObject != null)
-            {
-                bool[] buttonStates = new bool[colours.Length];
-
-                for (int i = 0; i < colours.Length - 1; i++)
-                {
-                    buttonStates[i] = int.Parse(values[i + 9]) == 1;
-
-                    // Instantiate object on button press if the button was not pressed in the last frame
-                    if (buttonStates[i] && !buttonPressedLastFrame[i])
-                    {
-                        lastClickedObject.GetComponent<Renderer>().material.color = colours[i];
                     }
 
                     // Update the buttonPressedLastFrame array for the next frame
