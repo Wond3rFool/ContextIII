@@ -32,7 +32,11 @@ public class ObjectDrag : MonoBehaviour
     private void OnMouseDown()
     {
         // Calculate the offset between the object's position and the mouse position
-        offset = transform.position - cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7));
+        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+        Vector3 worldMousePos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 7));
+
+        // Calculate the offset from the corner of the object
+        offset = transform.position - worldMousePos;
 
         // Start dragging
         isDragging = true;

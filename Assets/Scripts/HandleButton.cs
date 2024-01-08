@@ -75,16 +75,16 @@ public class HandleButton : MonoBehaviour
                 if (values != null)
                 {
                     // Update the rotation of the last clicked object
-                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.Self);
-                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.Self);
-                    if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.Self);
-                    if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.Self);
+                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
                 }
 
-                if (Input.GetKey(KeyCode.UpArrow)) lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
-                if (Input.GetKey(KeyCode.DownArrow)) lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
-                if (Input.GetKey(KeyCode.LeftArrow)) lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
-                if (Input.GetKey(KeyCode.RightArrow)) lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKey(KeyCode.UpArrow)) lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKey(KeyCode.DownArrow)) lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKey(KeyCode.LeftArrow)) lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKey(KeyCode.RightArrow)) lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
             }
         }
         if (isMaterialPhase)
@@ -92,7 +92,6 @@ public class HandleButton : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, phasePositions[1].position, 0.6f * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[1].rotation, 0.6f * Time.deltaTime);
         }
-
         if (isColourPhase)
         {
             transform.position = Vector3.Lerp(transform.position, phasePositions[2].position, 0.6f * Time.deltaTime);
@@ -208,6 +207,14 @@ public class HandleButton : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha2)) Instantiate(objectsToInstantiate[1], spawnP, Quaternion.identity);
             if (Input.GetKeyDown(KeyCode.Alpha3)) Instantiate(objectsToInstantiate[2], spawnP, Quaternion.identity);
             if (Input.GetKeyDown(KeyCode.Alpha4)) Instantiate(objectsToInstantiate[3], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha5)) Instantiate(objectsToInstantiate[4], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha6)) Instantiate(objectsToInstantiate[5], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha7)) Instantiate(objectsToInstantiate[6], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha8)) Instantiate(objectsToInstantiate[7], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha9)) Instantiate(objectsToInstantiate[8], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha0)) Instantiate(objectsToInstantiate[9], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Minus)) Instantiate(objectsToInstantiate[10], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Equals)) Instantiate(objectsToInstantiate[11], spawnP, Quaternion.identity);
         }
 
         if (isMaterialPhase)
