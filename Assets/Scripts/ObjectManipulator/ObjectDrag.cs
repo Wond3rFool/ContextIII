@@ -9,6 +9,7 @@ public class ObjectDrag : MonoBehaviour
     private bool isDragging;
     private bool canPlay;
     private Vector3 offset;
+    private Vector3 objectZ;
 
     private void Start()
     {
@@ -21,8 +22,9 @@ public class ObjectDrag : MonoBehaviour
     {
         if (isDragging)
         {
+            objectZ = WorldToScreen(transform.position);
             // Calculate the new position based on the offset
-            Vector3 newPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z - cam.transform.position.z)) + offset;
+            Vector3 newPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, objectZ.z)) + offset;
 
             // Set the new position
             transform.position = newPosition;
@@ -31,9 +33,10 @@ public class ObjectDrag : MonoBehaviour
 
     private void OnMouseDown()
     {
+        objectZ = WorldToScreen(transform.position);
         // Calculate the offset between the object's position and the mouse position
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
-        Vector3 worldMousePos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, transform.position.z - cam.transform.position.z));
+        Vector3 worldMousePos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, objectZ.z));
 
         // Calculate the offset from the corner of the object
         offset = transform.position - worldMousePos;
@@ -54,6 +57,11 @@ public class ObjectDrag : MonoBehaviour
         // Stop dragging
         isDragging = false;
         canPlay = true;
+    }
+
+    private Vector3 WorldToScreen(Vector3 worldPos)
+    {
+        return cam.WorldToScreenPoint(worldPos);
     }
 
 }

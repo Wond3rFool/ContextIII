@@ -288,7 +288,7 @@ public class HandleButton : MonoBehaviour
     {
         float elapsedTime = 0.001f;
         float turnSpeed = 500f;
-        float duration = 6f;
+        float duration = 6.5f;
 
         while (elapsedTime < duration)
         {
