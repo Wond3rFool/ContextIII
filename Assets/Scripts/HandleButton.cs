@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,6 +24,7 @@ public class HandleButton : MonoBehaviour
     private bool isColourPhase;
     private string[] values;
     private float spawnTimer;
+    private bool CanRotate;
 
     [SerializeField]
     private Transform[] phasePositions;
@@ -51,6 +53,7 @@ public class HandleButton : MonoBehaviour
 
         isDesignPhase = true;
         isMaterialPhase = false;
+        CanRotate = true;
         spawnTimer = 0;
     }
 
@@ -68,8 +71,12 @@ public class HandleButton : MonoBehaviour
         HandleButtonPressNoArduino();
         if (isDesignPhase)
         {
-            transform.position = Vector3.Lerp(transform.position, phasePositions[0].position, 0.6f * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[0].rotation, 0.6f * Time.deltaTime);
+            if (CanRotate) 
+            {
+                StartCoroutine(RotateCamera(0));
+                CanRotate = false;
+            }
+
             if (lastClickedObject != null)
             {
                 if (values != null)
@@ -89,13 +96,11 @@ public class HandleButton : MonoBehaviour
         }
         if (isMaterialPhase)
         {
-            transform.position = Vector3.Lerp(transform.position, phasePositions[1].position, 0.6f * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[1].rotation, 0.6f * Time.deltaTime);
-        }
-        if (isColourPhase)
-        {
-            transform.position = Vector3.Lerp(transform.position, phasePositions[2].position, 0.6f * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[2].rotation, 0.6f * Time.deltaTime);
+            if (CanRotate)
+            {
+                StartCoroutine(RotateCamera(1));
+                CanRotate = false;
+            }
         }
     }
 
@@ -131,6 +136,7 @@ public class HandleButton : MonoBehaviour
             {
                 isDesignPhase = false;
                 isMaterialPhase = true;
+                CanRotate = true;
             }
         }
         if (values[8] == "0") 
@@ -139,6 +145,7 @@ public class HandleButton : MonoBehaviour
             {
                 isMaterialPhase = false;
                 isDesignPhase = true;
+                CanRotate = true;
             }
         }
 
@@ -275,5 +282,32 @@ public class HandleButton : MonoBehaviour
         }
 
         return null; // Return null if no object is clicked
+    }
+
+    private IEnumerator RotateCamera(int phase) 
+    {
+        float elapsedTime = 0.001f;
+        float turnSpeed = 500f;
+        float duration = 6f;
+
+        while (elapsedTime < duration)
+        {
+            transform.position = Vector3.Lerp(transform.position, phasePositions[phase].position, elapsedTime/ turnSpeed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[phase].rotation, elapsedTime / turnSpeed);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public GameObject GetLastSelectedGameObject() 
+    {
+        if (lastClickedObject != null)
+        {
+            return lastClickedObject;
+        }
+        else 
+        {
+            return null;
+        }
     }
 }
