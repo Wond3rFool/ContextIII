@@ -22,7 +22,7 @@ public class ObjectDrag : MonoBehaviour
         if (isDragging)
         {
             // Calculate the new position based on the offset
-            Vector3 newPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7)) + offset;
+            Vector3 newPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z - cam.transform.position.z)) + offset;
 
             // Set the new position
             transform.position = newPosition;
@@ -33,7 +33,7 @@ public class ObjectDrag : MonoBehaviour
     {
         // Calculate the offset between the object's position and the mouse position
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
-        Vector3 worldMousePos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 7));
+        Vector3 worldMousePos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, transform.position.z - cam.transform.position.z));
 
         // Calculate the offset from the corner of the object
         offset = transform.position - worldMousePos;
