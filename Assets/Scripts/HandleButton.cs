@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,6 +24,7 @@ public class HandleButton : MonoBehaviour
     private bool isColourPhase;
     private string[] values;
     private float spawnTimer;
+    private bool CanRotate;
 
     [SerializeField]
     private Transform[] phasePositions;
@@ -51,6 +53,7 @@ public class HandleButton : MonoBehaviour
 
         isDesignPhase = true;
         isMaterialPhase = false;
+        CanRotate = true;
         spawnTimer = 0;
     }
 
@@ -68,35 +71,36 @@ public class HandleButton : MonoBehaviour
         HandleButtonPressNoArduino();
         if (isDesignPhase)
         {
-            transform.position = Vector3.Lerp(transform.position, phasePositions[0].position, 0.6f * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[0].rotation, 0.6f * Time.deltaTime);
+            if (CanRotate) 
+            {
+                StartCoroutine(RotateCamera(0));
+                CanRotate = false;
+            }
+
             if (lastClickedObject != null)
             {
                 if (values != null)
                 {
                     // Update the rotation of the last clicked object
-                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.Self);
-                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.Self);
-                    if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.Self);
-                    if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.Self);
+                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
                 }
 
-                if (Input.GetKey(KeyCode.UpArrow)) lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
-                if (Input.GetKey(KeyCode.DownArrow)) lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
-                if (Input.GetKey(KeyCode.LeftArrow)) lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
-                if (Input.GetKey(KeyCode.RightArrow)) lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKey(KeyCode.UpArrow)) lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKey(KeyCode.DownArrow)) lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKey(KeyCode.LeftArrow)) lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
+                if (Input.GetKey(KeyCode.RightArrow)) lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
             }
         }
         if (isMaterialPhase)
         {
-            transform.position = Vector3.Lerp(transform.position, phasePositions[1].position, 0.6f * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[1].rotation, 0.6f * Time.deltaTime);
-        }
-
-        if (isColourPhase)
-        {
-            transform.position = Vector3.Lerp(transform.position, phasePositions[2].position, 0.6f * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[2].rotation, 0.6f * Time.deltaTime);
+            if (CanRotate)
+            {
+                StartCoroutine(RotateCamera(1));
+                CanRotate = false;
+            }
         }
     }
 
@@ -132,6 +136,7 @@ public class HandleButton : MonoBehaviour
             {
                 isDesignPhase = false;
                 isMaterialPhase = true;
+                CanRotate = true;
             }
         }
         if (values[8] == "0") 
@@ -140,6 +145,7 @@ public class HandleButton : MonoBehaviour
             {
                 isMaterialPhase = false;
                 isDesignPhase = true;
+                CanRotate = true;
             }
         }
 
@@ -208,6 +214,14 @@ public class HandleButton : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha2)) Instantiate(objectsToInstantiate[1], spawnP, Quaternion.identity);
             if (Input.GetKeyDown(KeyCode.Alpha3)) Instantiate(objectsToInstantiate[2], spawnP, Quaternion.identity);
             if (Input.GetKeyDown(KeyCode.Alpha4)) Instantiate(objectsToInstantiate[3], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha5)) Instantiate(objectsToInstantiate[4], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha6)) Instantiate(objectsToInstantiate[5], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha7)) Instantiate(objectsToInstantiate[6], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha8)) Instantiate(objectsToInstantiate[7], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha9)) Instantiate(objectsToInstantiate[8], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Alpha0)) Instantiate(objectsToInstantiate[9], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Minus)) Instantiate(objectsToInstantiate[10], spawnP, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Equals)) Instantiate(objectsToInstantiate[11], spawnP, Quaternion.identity);
         }
 
         if (isMaterialPhase)
@@ -268,5 +282,32 @@ public class HandleButton : MonoBehaviour
         }
 
         return null; // Return null if no object is clicked
+    }
+
+    private IEnumerator RotateCamera(int phase) 
+    {
+        float elapsedTime = 0.001f;
+        float turnSpeed = 800f;
+        float duration = 6.5f;
+
+        while (elapsedTime < duration)
+        {
+            transform.position = Vector3.Lerp(transform.position, phasePositions[phase].position, elapsedTime/ turnSpeed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[phase].rotation, elapsedTime / turnSpeed);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public GameObject GetLastSelectedGameObject() 
+    {
+        if (lastClickedObject != null)
+        {
+            return lastClickedObject;
+        }
+        else 
+        {
+            return null;
+        }
     }
 }

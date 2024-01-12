@@ -16,15 +16,9 @@ public class InstantiateObject : MonoBehaviour
         // Convert the mouse position to a world point
         Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10f));
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) // Change 'Space' to the desired key
-        {
-            // Instantiate the prefab at a specific position and rotation
-            Instantiate(prefabToInstantiate1, spawnPosition, Quaternion.identity);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) // Change 'Space' to the desired key
-        {
-            // Instantiate the prefab at a specific position and rotation
-            Instantiate(prefabToInstantiate2, spawnPosition, Quaternion.identity);
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) Instantiate(prefabToInstantiate1, spawnPosition, Quaternion.identity);
+        
+        if (Input.GetKeyDown(KeyCode.Alpha2)) Instantiate(prefabToInstantiate2, spawnPosition, Quaternion.identity);
+        
     }
 }
