@@ -8,7 +8,7 @@ public class UIButtons : MonoBehaviour
     private GameObject rotator;
 
     [SerializeField]
-    private float speed;
+    private float rotationSpeed = 25.0f;
 
     private HandleButton handleButtons;
 
@@ -17,13 +17,16 @@ public class UIButtons : MonoBehaviour
     private Quaternion targetRotation;
     private Vector3 targetScale;
 
-    private float scaleFactorUp = 1.1f;
-    private float scaleFactorDown = 0.9f;// You can adjust this factor based on your requirements
-    private float scaleDuration = 10f; // Duration for each scaling step
+    private float scaleFactorUp = 1.02f;
+    private float scaleFactorDown = 0.98f;
 
-    private float rotationSpeed = 10.0f; // You can adjust the rotation speed based on your requirements
-    private float rotationDuration = 4.0f; // Duration for each rotation step
+    [SerializeField]
+    private float scaleDuration = 0.3f;
 
+    private bool rotateClockwise;
+    private bool rotateCounterClockwise;
+    private bool scaleUp;
+    private bool scaleDown;
 
     private void Start()
     {
@@ -33,38 +36,73 @@ public class UIButtons : MonoBehaviour
 
     private void Update()
     {
-        if (handleButtons.GetLastSelectedGameObject() != null) 
+        if (handleButtons.GetLastSelectedGameObject() != null)
         {
             objectToScale = handleButtons.GetLastSelectedGameObject();
             targetScale = objectToScale.transform.localScale;
-            
         }
-        print(targetScale);
-        if (targetScale != Vector3.zero) 
+
+        if (rotateClockwise)
         {
-            objectToScale.transform.localScale = Vector3.Lerp(objectToScale.transform.localScale, targetScale, scaleDuration * Time.deltaTime);
+            targetRotation *= Quaternion.Euler(0f, Mathf.Clamp(rotationSpeed, -180f, 180f) * Time.deltaTime, 0f);
         }
+
+        if (rotateCounterClockwise)
+        {
+            targetRotation *= Quaternion.Euler(0f, Mathf.Clamp(-rotationSpeed, -180f, 180f) * Time.deltaTime, 0f);
+        }
+
+        if (scaleUp && objectToScale != null)
+        {
+            targetScale *= Mathf.Clamp(scaleFactorUp, 0.1f, 1.5f);
+        }
+
+        if (scaleDown && objectToScale != null)
+        {
+            targetScale *= Mathf.Clamp(scaleFactorDown, 0.1f, 1.5f);
+        }
+
+        if (objectToScale != null) objectToScale.transform.localScale = Vector3.Lerp(objectToScale.transform.localScale, targetScale, scaleDuration);
         rotator.transform.rotation = Quaternion.Lerp(rotator.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
-    public void RotateCameraClockWise()
+
+    public void RotateCameraClockwise()
     {
-        targetRotation *= Quaternion.Euler(0f, 20f, 0f);
+        rotateClockwise = true;
     }
 
-    public void RotateCamereCounterClockWise() 
+    public void StopRotateCameraClockwise()
     {
-        targetRotation *= Quaternion.Euler(0f, -20f, 0f);
+        rotateClockwise = false;
+    }
+
+    public void RotateCameraCounterClockwise()
+    {
+        rotateCounterClockwise = true;
+    }
+
+    public void StopRotateCameraCounterClockwise()
+    {
+        rotateCounterClockwise = false;
     }
 
     public void ScaleObjectUp()
     {
-        if (objectToScale == null) return;
-        targetScale *= scaleFactorUp;
+        scaleUp = true;
+    }
+
+    public void StopScaleObjectUp()
+    {
+        scaleUp = false;
     }
 
     public void ScaleObjectDown()
     {
-        if (objectToScale == null) return;
-        targetScale *= scaleFactorDown;
+        scaleDown = true;
+    }
+
+    public void StopScaleObjectDown()
+    {
+        scaleDown = false;
     }
 }

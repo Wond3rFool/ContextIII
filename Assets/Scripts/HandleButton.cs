@@ -287,7 +287,7 @@ public class HandleButton : MonoBehaviour
     private IEnumerator RotateCamera(int phase) 
     {
         float elapsedTime = 0.001f;
-        float turnSpeed = 500f;
+        float turnSpeed = 800f;
         float duration = 6.5f;
 
         while (elapsedTime < duration)
