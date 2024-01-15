@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class UIButtons : MonoBehaviour
 {
@@ -23,12 +24,14 @@ public class UIButtons : MonoBehaviour
     [SerializeField]
     private float scaleDuration = 0.3f;
 
-    public AudioSource increaseSize;
-    public AudioSource decreaseSize;
+    public AudioSource source;
 
-    public AudioSource rotateCamera;
+    public AudioClip increaseSize;
+    public AudioClip decreaseSize;
 
-    public AudioSource confirmButton;
+    public AudioClip rotateCamera;
+
+    public AudioClip confirmButton;
 
     private bool rotateClockwise;
     private bool rotateCounterClockwise;
@@ -76,48 +79,48 @@ public class UIButtons : MonoBehaviour
     public void RotateCameraClockwise()
     {
         rotateClockwise = true;
-        rotateCamera.Play();
+        source.PlayOneShot(rotateCamera);
     }
 
     public void StopRotateCameraClockwise()
     {
         rotateClockwise = false;
-        rotateCamera.Stop();
+        source.PlayOneShot(rotateCamera);
     }
 
     public void RotateCameraCounterClockwise()
     {
         rotateCounterClockwise = true;
-        rotateCamera.Play();
+        source.PlayOneShot(rotateCamera);
     }
 
     public void StopRotateCameraCounterClockwise()
     {
         rotateCounterClockwise = false;
-        rotateCamera.Stop();
+        source.PlayOneShot(rotateCamera);
     }
 
     public void ScaleObjectUp()
     {
         scaleUp = true;
-        increaseSize.Play();
+        source.PlayOneShot(increaseSize);
     }
 
     public void StopScaleObjectUp()
     {
         scaleUp = false;
-        increaseSize.Stop();
+        source.PlayOneShot(increaseSize);
     }
 
     public void ScaleObjectDown()
     {
         scaleDown = true;
-        decreaseSize.Play();
+        source.PlayOneShot(decreaseSize);
     }
 
     public void StopScaleObjectDown()
     {
         scaleDown = false;
-        decreaseSize.Stop();
+        source.PlayOneShot(decreaseSize);
     }
 }

@@ -14,11 +14,13 @@ public class HandleButton : MonoBehaviour
     public Material material;
     public Shader shader1;
 
-    public AudioSource spawnItem;
-    public AudioSource changeColour;
-    public AudioSource switchPhase;
-    public AudioSource itemSelect;
-    public AudioSource itemDrop;
+    public AudioSource source;
+
+    public AudioClip spawnItem;
+    public AudioClip changeColour;
+    public AudioClip switchPhase;
+    public AudioClip itemSelect;
+    public AudioClip itemDrop;
 
     // Reference to the ArduinoValueReader script
     public ArduinoValueReader arduinoValueReader;
@@ -79,7 +81,7 @@ public class HandleButton : MonoBehaviour
     {
         if (spawnItemSound) 
         {
-            spawnItem.Play();
+            source.PlayOneShot(spawnItem);
             spawnItemSound = false;
         }
 
@@ -173,11 +175,11 @@ public class HandleButton : MonoBehaviour
 
             lastClickedObject = CheckForObjectClick();
 
-            itemSelect.Play();
+            source.PlayOneShot(itemSelect);
         }
         if (values[7] == "0") 
         {
-            switchPhase.Play();
+            source.PlayOneShot(switchPhase);
             if (isDesignPhase)
             {
                 isDesignPhase = false;
@@ -187,7 +189,7 @@ public class HandleButton : MonoBehaviour
         }
         if (values[8] == "0") 
         {
-            switchPhase.Play();
+            source.PlayOneShot(switchPhase);
             if (isMaterialPhase)
             {
                 isMaterialPhase = false;
