@@ -23,6 +23,13 @@ public class UIButtons : MonoBehaviour
     [SerializeField]
     private float scaleDuration = 0.3f;
 
+    public AudioSource increaseSize;
+    public AudioSource decreaseSize;
+
+    public AudioSource rotateCamera;
+
+    public AudioSource confirmButton;
+
     private bool rotateClockwise;
     private bool rotateCounterClockwise;
     private bool scaleUp;
@@ -69,40 +76,48 @@ public class UIButtons : MonoBehaviour
     public void RotateCameraClockwise()
     {
         rotateClockwise = true;
+        rotateCamera.Play();
     }
 
     public void StopRotateCameraClockwise()
     {
         rotateClockwise = false;
+        rotateCamera.Stop();
     }
 
     public void RotateCameraCounterClockwise()
     {
         rotateCounterClockwise = true;
+        rotateCamera.Play();
     }
 
     public void StopRotateCameraCounterClockwise()
     {
         rotateCounterClockwise = false;
+        rotateCamera.Stop();
     }
 
     public void ScaleObjectUp()
     {
         scaleUp = true;
+        increaseSize.Play();
     }
 
     public void StopScaleObjectUp()
     {
         scaleUp = false;
+        increaseSize.Stop();
     }
 
     public void ScaleObjectDown()
     {
         scaleDown = true;
+        decreaseSize.Play();
     }
 
     public void StopScaleObjectDown()
     {
         scaleDown = false;
+        decreaseSize.Stop();
     }
 }

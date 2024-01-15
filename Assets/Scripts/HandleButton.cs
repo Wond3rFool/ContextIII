@@ -12,8 +12,14 @@ public class HandleButton : MonoBehaviour
     public GameObject[] objectsToInstantiate;
 
     public Material material;
-
     public Shader shader1;
+
+    public AudioSource spawnItem;
+    public AudioSource changeColour;
+    public AudioSource switchPhase;
+    public AudioSource itemSelect;
+    public AudioSource itemDrop;
+
     // Reference to the ArduinoValueReader script
     public ArduinoValueReader arduinoValueReader;
 
@@ -30,6 +36,8 @@ public class HandleButton : MonoBehaviour
     private float mouseTimer;
     private bool CanRotate;
     private bool mouseInSamePos;
+
+    private bool spawnItemSound;
 
     [SerializeField]
     private Transform[] phasePositions;
@@ -50,7 +58,7 @@ public class HandleButton : MonoBehaviour
     void Start()
     {
         //material.shader = shader1;
-
+        spawnItemSound = false;
         // Ensure that the ArduinoValueReader script is assigned
         if (arduinoValueReader == null)
         {
@@ -69,6 +77,12 @@ public class HandleButton : MonoBehaviour
 
     void Update()
     {
+        if (spawnItemSound) 
+        {
+            spawnItem.Play();
+            spawnItemSound = false;
+        }
+
         mousePosition = Input.mousePosition;
         // Get the received message from ArduinoValueReader script
         string message = arduinoValueReader.GetCurrentMessage();
@@ -158,9 +172,12 @@ public class HandleButton : MonoBehaviour
             MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
 
             lastClickedObject = CheckForObjectClick();
+
+            itemSelect.Play();
         }
         if (values[7] == "0") 
         {
+            switchPhase.Play();
             if (isDesignPhase)
             {
                 isDesignPhase = false;
@@ -170,6 +187,7 @@ public class HandleButton : MonoBehaviour
         }
         if (values[8] == "0") 
         {
+            switchPhase.Play();
             if (isMaterialPhase)
             {
                 isMaterialPhase = false;
@@ -181,6 +199,7 @@ public class HandleButton : MonoBehaviour
 
         if (isDesignPhase)
         {
+
             bool[] buttonStates = new bool[objectsToInstantiate.Length];
 
             for (int i = 0; i < objectsToInstantiate.Length; i++)
@@ -195,6 +214,7 @@ public class HandleButton : MonoBehaviour
                 {
                     Instantiate(objectsToInstantiate[i], spawnPosition, Quaternion.identity);
                     Debug.Log(objectsToInstantiate[i].name);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
 
@@ -245,62 +265,74 @@ public class HandleButton : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
                     Instantiate(objectsToInstantiate[0], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha2)) 
                 {
                     Instantiate(objectsToInstantiate[1], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 } 
                 
                 if (Input.GetKeyDown(KeyCode.Alpha3))
                 { 
                     Instantiate(objectsToInstantiate[2], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 } 
                 if (Input.GetKeyDown(KeyCode.Alpha4))
                 {
                     Instantiate(objectsToInstantiate[3], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 } 
                 if (Input.GetKeyDown(KeyCode.Alpha5))
                 {
                     Instantiate(objectsToInstantiate[4], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha6)) 
                 {
                     Instantiate(objectsToInstantiate[5], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }  
                 if (Input.GetKeyDown(KeyCode.Alpha7)) 
                 { 
                     Instantiate(objectsToInstantiate[6], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha8))
                 { 
                     Instantiate(objectsToInstantiate[7], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 } 
                 if (Input.GetKeyDown(KeyCode.Alpha9))
                 { 
                     Instantiate(objectsToInstantiate[8], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha0)) 
                 { 
                     Instantiate(objectsToInstantiate[9], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
                 if (Input.GetKeyDown(KeyCode.Minus)) 
                 { 
                     Instantiate(objectsToInstantiate[10], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
                 if (Input.GetKeyDown(KeyCode.Equals))
                 {
                     Instantiate(objectsToInstantiate[11], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
                 
