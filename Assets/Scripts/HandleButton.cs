@@ -24,10 +24,14 @@ public class HandleButton : MonoBehaviour
     private bool isColourPhase;
     private string[] values;
     private float spawnTimer;
+    private float mouseTimer;
     private bool CanRotate;
+    private bool mouseInSamePos;
 
     [SerializeField]
     private Transform[] phasePositions;
+
+    private Vector3 OldMousePosition;
 
     [SerializeField]
     private Material[] materials;
@@ -52,6 +56,7 @@ public class HandleButton : MonoBehaviour
         buttonPressedLastFrame = new bool[objectsToInstantiate.Length];
 
         isDesignPhase = true;
+        mouseInSamePos = false;
         isMaterialPhase = false;
         CanRotate = true;
         spawnTimer = 0;
@@ -59,6 +64,7 @@ public class HandleButton : MonoBehaviour
 
     void Update()
     {
+        mousePosition = Input.mousePosition;
         // Get the received message from ArduinoValueReader script
         string message = arduinoValueReader.GetCurrentMessage();
         spawnTimer += Time.deltaTime;
@@ -102,6 +108,24 @@ public class HandleButton : MonoBehaviour
                 CanRotate = false;
             }
         }
+
+        if (OldMousePosition == mousePosition) 
+        {
+            mouseTimer += Time.deltaTime;
+        }
+        else
+        {
+            mouseInSamePos = false;
+            mouseTimer = 0;
+        }
+
+        if (mouseTimer > 3)
+        {
+            mouseInSamePos = true;
+        }
+
+
+        OldMousePosition = mousePosition;
     }
 
 
@@ -162,7 +186,7 @@ public class HandleButton : MonoBehaviour
                 Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
 
                 // Instantiate object on button press if the button was not pressed in the last frame
-                if (buttonStates[i] && spawnTimer > 3)
+                if (buttonStates[i] && spawnTimer > 3 && !mouseInSamePos)
                 {
                     Instantiate(objectsToInstantiate[i], spawnPosition, Quaternion.identity);
                     Debug.Log(objectsToInstantiate[i].name);
@@ -208,20 +232,74 @@ public class HandleButton : MonoBehaviour
 
         if (isDesignPhase)
         {
-            // Check keyboard input for object instantiation
-            Vector3 spawnP = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
-            if (Input.GetKeyDown(KeyCode.Alpha1)) Instantiate(objectsToInstantiate[0], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha2)) Instantiate(objectsToInstantiate[1], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha3)) Instantiate(objectsToInstantiate[2], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha4)) Instantiate(objectsToInstantiate[3], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha5)) Instantiate(objectsToInstantiate[4], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha6)) Instantiate(objectsToInstantiate[5], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha7)) Instantiate(objectsToInstantiate[6], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha8)) Instantiate(objectsToInstantiate[7], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha9)) Instantiate(objectsToInstantiate[8], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Alpha0)) Instantiate(objectsToInstantiate[9], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Minus)) Instantiate(objectsToInstantiate[10], spawnP, Quaternion.identity);
-            if (Input.GetKeyDown(KeyCode.Equals)) Instantiate(objectsToInstantiate[11], spawnP, Quaternion.identity);
+
+            if (spawnTimer > 3 && !mouseInSamePos)
+            {
+                // Check keyboard input for object instantiation
+                Vector3 spawnP = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    Instantiate(objectsToInstantiate[0], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha2)) 
+                {
+                    Instantiate(objectsToInstantiate[1], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                } 
+                
+                if (Input.GetKeyDown(KeyCode.Alpha3))
+                { 
+                    Instantiate(objectsToInstantiate[2], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                } 
+                if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    Instantiate(objectsToInstantiate[3], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                } 
+                if (Input.GetKeyDown(KeyCode.Alpha5))
+                {
+                    Instantiate(objectsToInstantiate[4], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha6)) 
+                {
+                    Instantiate(objectsToInstantiate[5], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                }  
+                if (Input.GetKeyDown(KeyCode.Alpha7)) 
+                { 
+                    Instantiate(objectsToInstantiate[6], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha8))
+                { 
+                    Instantiate(objectsToInstantiate[7], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                } 
+                if (Input.GetKeyDown(KeyCode.Alpha9))
+                { 
+                    Instantiate(objectsToInstantiate[8], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha0)) 
+                { 
+                    Instantiate(objectsToInstantiate[9], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                }
+                if (Input.GetKeyDown(KeyCode.Minus)) 
+                { 
+                    Instantiate(objectsToInstantiate[10], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                }
+                if (Input.GetKeyDown(KeyCode.Equals))
+                {
+                    Instantiate(objectsToInstantiate[11], spawnP, Quaternion.identity);
+                    spawnTimer = 0;
+                }
+                
+            }
         }
 
         if (isMaterialPhase)
