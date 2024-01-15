@@ -11,6 +11,9 @@ public class HandleButton : MonoBehaviour
     [SerializeField]
     public GameObject[] objectsToInstantiate;
 
+    public Material material;
+
+    public Shader shader1;
     // Reference to the ArduinoValueReader script
     public ArduinoValueReader arduinoValueReader;
 
@@ -46,6 +49,8 @@ public class HandleButton : MonoBehaviour
 
     void Start()
     {
+        //material.shader = shader1;
+
         // Ensure that the ArduinoValueReader script is assigned
         if (arduinoValueReader == null)
         {
