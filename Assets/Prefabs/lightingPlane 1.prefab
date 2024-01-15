@@ -48,10 +48,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< Updated upstream:Assets/Prefabs/lightingPlane 1.prefab
     - target: {fileID: 919132149155446097, guid: 911ceb45cce1bda47b60ecd021cca4e1, type: 3}
+=======
+    - target: {fileID: -5346011270827451340, guid: 7ceac7f990f58de45bdcfe710993871b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9e9c2af7ad45d8542aff3b60f453580d, type: 2}
+    - target: {fileID: 919132149155446097, guid: 7ceac7f990f58de45bdcfe710993871b, type: 3}
+>>>>>>> Stashed changes:Assets/Prefabs/FinalObjects/ArtDecoObject1.prefab
       propertyPath: m_Name
       value: lightingPlane 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1099972482116436109, guid: 7ceac7f990f58de45bdcfe710993871b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9e9c2af7ad45d8542aff3b60f453580d, type: 2}
+    - target: {fileID: 2834455701579547633, guid: 7ceac7f990f58de45bdcfe710993871b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9e9c2af7ad45d8542aff3b60f453580d, type: 2}
+    - target: {fileID: 5331674106781544886, guid: 7ceac7f990f58de45bdcfe710993871b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9e9c2af7ad45d8542aff3b60f453580d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
