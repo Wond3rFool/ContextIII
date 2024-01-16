@@ -25,6 +25,8 @@ public class HandleButton : MonoBehaviour
     // Reference to the ArduinoValueReader script
     public ArduinoValueReader arduinoValueReader;
 
+    public GameObject domeObjects;
+
     public int spawnRange;
     private Vector3 mousePosition;
     private GameObject lastClickedObject;
@@ -74,6 +76,7 @@ public class HandleButton : MonoBehaviour
         mouseInSamePos = false;
         isMaterialPhase = false;
         CanRotate = true;
+        domeObjects.SetActive(false);
         spawnTimer = 0;
     }
 
@@ -98,6 +101,7 @@ public class HandleButton : MonoBehaviour
         HandleButtonPressNoArduino();
         if (isDesignPhase)
         {
+            domeObjects.SetActive(false);
             if (CanRotate) 
             {
                 StartCoroutine(RotateCamera(0));
@@ -123,6 +127,7 @@ public class HandleButton : MonoBehaviour
         }
         if (isMaterialPhase)
         {
+            domeObjects.SetActive(true);   
             if (CanRotate)
             {
                 StartCoroutine(RotateCamera(1));
@@ -145,10 +150,17 @@ public class HandleButton : MonoBehaviour
             mouseInSamePos = true;
         }
 
-
+        print(lastClickedObject);
         OldMousePosition = mousePosition;
     }
 
+    public void DeleteSelectedGameObject()
+    {
+        if (lastClickedObject != null)
+        {
+            Destroy(lastClickedObject.gameObject);
+        }
+    }
 
     void HandleButtonPress(string message)
     {
@@ -174,8 +186,7 @@ public class HandleButton : MonoBehaviour
             MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
 
             lastClickedObject = CheckForObjectClick();
-
-            source.PlayOneShot(itemSelect);
+            //source.PlayOneShot(itemSelect);
         }
         if (values[7] == "0") 
         {
@@ -398,7 +409,7 @@ public class HandleButton : MonoBehaviour
             return clickedObject.gameObject; // Return the clicked object
         }
 
-        return null; // Return null if no object is clicked
+        return lastClickedObject; // Return null if no object is clicked
     }
 
     private IEnumerator RotateCamera(int phase) 
