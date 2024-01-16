@@ -12,7 +12,8 @@ public class HandleButton : MonoBehaviour
     public GameObject[] objectsToInstantiate;
 
     public Material material;
-    public Shader shader1;
+    public Shader shaderOff;
+    public Shader sketchShader;
 
     public AudioSource source;
 
@@ -61,7 +62,6 @@ public class HandleButton : MonoBehaviour
 
     void Start()
     {
-        //material.shader = shader1;
         spawnItemSound = false;
         // Ensure that the ArduinoValueReader script is assigned
         if (arduinoValueReader == null)
@@ -82,7 +82,7 @@ public class HandleButton : MonoBehaviour
 
     void Update()
     {
-        if (spawnItemSound) 
+        if (spawnItemSound)
         {
             source.PlayOneShot(spawnItem);
             spawnItemSound = false;
@@ -102,7 +102,8 @@ public class HandleButton : MonoBehaviour
         if (isDesignPhase)
         {
             domeObjects.SetActive(false);
-            if (CanRotate) 
+            material.shader = sketchShader;
+            if (CanRotate)
             {
                 StartCoroutine(RotateCamera(0));
                 CanRotate = false;
@@ -127,7 +128,8 @@ public class HandleButton : MonoBehaviour
         }
         if (isMaterialPhase)
         {
-            domeObjects.SetActive(true);   
+            domeObjects.SetActive(true);
+            material.shader = shaderOff;
             if (CanRotate)
             {
                 StartCoroutine(RotateCamera(1));
@@ -135,7 +137,7 @@ public class HandleButton : MonoBehaviour
             }
         }
 
-        if (OldMousePosition == mousePosition) 
+        if (OldMousePosition == mousePosition)
         {
             mouseTimer += Time.deltaTime;
         }
@@ -149,8 +151,6 @@ public class HandleButton : MonoBehaviour
         {
             mouseInSamePos = true;
         }
-
-        print(lastClickedObject);
         OldMousePosition = mousePosition;
     }
 
@@ -188,27 +188,14 @@ public class HandleButton : MonoBehaviour
             lastClickedObject = CheckForObjectClick();
             //source.PlayOneShot(itemSelect);
         }
-        if (values[7] == "0") 
+        if (values[7] == "0")
         {
-            source.PlayOneShot(switchPhase);
-            if (isDesignPhase)
-            {
-                isDesignPhase = false;
-                isMaterialPhase = true;
-                CanRotate = true;
-            }
-        }
-        if (values[8] == "0") 
-        {
-            source.PlayOneShot(switchPhase);
-            if (isMaterialPhase)
-            {
-                isMaterialPhase = false;
-                isDesignPhase = true;
-                CanRotate = true;
-            }
-        }
 
+        }
+        if (values[8] == "0")
+        {
+
+        }
 
         if (isDesignPhase)
         {
@@ -281,63 +268,63 @@ public class HandleButton : MonoBehaviour
                     spawnItemSound = true;
                     spawnTimer = 0;
                 }
-                if (Input.GetKeyDown(KeyCode.Alpha2)) 
+                if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
                     Instantiate(objectsToInstantiate[1], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
-                } 
-                
+                }
+
                 if (Input.GetKeyDown(KeyCode.Alpha3))
-                { 
+                {
                     Instantiate(objectsToInstantiate[2], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
-                } 
+                }
                 if (Input.GetKeyDown(KeyCode.Alpha4))
                 {
                     Instantiate(objectsToInstantiate[3], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
-                } 
+                }
                 if (Input.GetKeyDown(KeyCode.Alpha5))
                 {
                     Instantiate(objectsToInstantiate[4], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
                 }
-                if (Input.GetKeyDown(KeyCode.Alpha6)) 
+                if (Input.GetKeyDown(KeyCode.Alpha6))
                 {
                     Instantiate(objectsToInstantiate[5], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
-                }  
-                if (Input.GetKeyDown(KeyCode.Alpha7)) 
-                { 
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha7))
+                {
                     Instantiate(objectsToInstantiate[6], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha8))
-                { 
+                {
                     Instantiate(objectsToInstantiate[7], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
-                } 
+                }
                 if (Input.GetKeyDown(KeyCode.Alpha9))
-                { 
+                {
                     Instantiate(objectsToInstantiate[8], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
                 }
-                if (Input.GetKeyDown(KeyCode.Alpha0)) 
-                { 
+                if (Input.GetKeyDown(KeyCode.Alpha0))
+                {
                     Instantiate(objectsToInstantiate[9], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
                 }
-                if (Input.GetKeyDown(KeyCode.Minus)) 
-                { 
+                if (Input.GetKeyDown(KeyCode.Minus))
+                {
                     Instantiate(objectsToInstantiate[10], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
@@ -348,7 +335,7 @@ public class HandleButton : MonoBehaviour
                     spawnItemSound = true;
                     spawnTimer = 0;
                 }
-                
+
             }
         }
 
@@ -412,7 +399,7 @@ public class HandleButton : MonoBehaviour
         return lastClickedObject; // Return null if no object is clicked
     }
 
-    private IEnumerator RotateCamera(int phase) 
+    private IEnumerator RotateCamera(int phase)
     {
         float elapsedTime = 0.001f;
         float turnSpeed = 800f;
@@ -420,22 +407,39 @@ public class HandleButton : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            transform.position = Vector3.Lerp(transform.position, phasePositions[phase].position, elapsedTime/ turnSpeed);
+            transform.position = Vector3.Lerp(transform.position, phasePositions[phase].position, elapsedTime / turnSpeed);
             transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[phase].rotation, elapsedTime / turnSpeed);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
     }
 
-    public GameObject GetLastSelectedGameObject() 
+    public GameObject GetLastSelectedGameObject()
     {
         if (lastClickedObject != null)
         {
             return lastClickedObject;
         }
-        else 
+        else
         {
             return null;
+        }
+    }
+
+    public void SwitchPhase()
+    {
+        source.PlayOneShot(switchPhase);
+        if (isMaterialPhase)
+        {
+            isMaterialPhase = false;
+            isDesignPhase = true;
+            CanRotate = true;
+        }
+        else if (isDesignPhase)
+        {
+            isDesignPhase = false;
+            isMaterialPhase = true;
+            CanRotate = true;
         }
     }
 }

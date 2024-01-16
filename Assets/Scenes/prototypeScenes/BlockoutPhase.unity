@@ -610,7 +610,8 @@ MonoBehaviour:
   - {fileID: 1083384524587475905, guid: ba1937d54c68acb4bab0409a5ea9b5a8, type: 3}
   - {fileID: 2647681359693217186, guid: aaea49a03789daa49ac0976080587666, type: 3}
   material: {fileID: 2100000, guid: a373ef06912ad2a44872ac53eb5b8625, type: 2}
-  shader1: {fileID: -6465566751694194690, guid: f2a2579583d57cf4e892602877f84046, type: 3}
+  shaderOff: {fileID: -6465566751694194690, guid: f2a2579583d57cf4e892602877f84046, type: 3}
+  sketchShader: {fileID: -6465566751694194690, guid: 529395d951cfdcf4db32c3d11c1ccb0c, type: 3}
   source: {fileID: 1015726228}
   spawnItem: {fileID: 0}
   changeColour: {fileID: 0}
@@ -976,6 +977,42 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1015726227}
+    - target: {fileID: 7360905805086804874, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360905805086804874, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360905805086804874, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360905805086804874, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1015726225}
+    - target: {fileID: 7360905805086804874, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360905805086804874, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SwitchPhase
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360905805086804874, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HandleButton, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360905805086804874, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7473676657483973194, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7473676657483973194, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
