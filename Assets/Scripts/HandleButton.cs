@@ -28,6 +28,8 @@ public class HandleButton : MonoBehaviour
 
     public GameObject domeObjects;
 
+    public Material skyboxMaterial;
+
     public int spawnRange;
     private Vector3 mousePosition;
     private GameObject lastClickedObject;
@@ -103,11 +105,7 @@ public class HandleButton : MonoBehaviour
         {
             domeObjects.SetActive(false);
             material.shader = sketchShader;
-            if (CanRotate)
-            {
-                StartCoroutine(RotateCamera(0));
-                CanRotate = false;
-            }
+            RenderSettings.skybox = null;
 
             if (lastClickedObject != null)
             {
@@ -130,11 +128,7 @@ public class HandleButton : MonoBehaviour
         {
             domeObjects.SetActive(true);
             material.shader = shaderOff;
-            if (CanRotate)
-            {
-                StartCoroutine(RotateCamera(1));
-                CanRotate = false;
-            }
+            RenderSettings.skybox = skyboxMaterial;
         }
 
         if (OldMousePosition == mousePosition)

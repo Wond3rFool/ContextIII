@@ -620,6 +620,7 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   arduinoValueReader: {fileID: 1015726226}
   domeObjects: {fileID: 752102355}
+  skyboxMaterial: {fileID: 2100000, guid: f8dca18b68d1f5b4f97a285b6a9c0ce6, type: 2}
   spawnRange: 15
   phasePositions:
   - {fileID: 158513112}
