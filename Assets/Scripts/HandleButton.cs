@@ -230,7 +230,7 @@ public class HandleButton : MonoBehaviour
                     // Instantiate object on button press if the button was not pressed in the last frame
                     if (buttonStates[i] && !buttonPressedLastFrame[i])
                     {
-                        lastClickedObject.GetComponent<Renderer>().material = materials[i];
+                        lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[i];
                     }
 
                     // Update the buttonPressedLastFrame array for the next frame
@@ -336,15 +336,16 @@ public class HandleButton : MonoBehaviour
         if (isMaterialPhase)
         {
 
-            if (Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponent<Renderer>().material = materials[0];
-            if (Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponent<Renderer>().material = materials[1];
-            if (Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponent<Renderer>().material = materials[2];
-            if (Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponent<Renderer>().material = materials[3];
-            if (Input.GetKeyDown(KeyCode.Alpha5)) lastClickedObject.GetComponent<Renderer>().material = materials[4];
-            if (Input.GetKeyDown(KeyCode.Alpha6)) lastClickedObject.GetComponent<Renderer>().material = materials[5];
-            if (Input.GetKeyDown(KeyCode.Alpha7)) lastClickedObject.GetComponent<Renderer>().material = materials[6];
-            if (Input.GetKeyDown(KeyCode.Alpha8)) lastClickedObject.GetComponent<Renderer>().material = materials[7];
-            if (Input.GetKeyDown(KeyCode.Alpha9)) lastClickedObject.GetComponent<Renderer>().material = materials[8];
+            if (Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[0];
+            if (Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[1];
+            if (Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[2];
+            if (Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[3];
+            if (Input.GetKeyDown(KeyCode.Alpha5)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[4];
+            if (Input.GetKeyDown(KeyCode.Alpha6)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[5];
+            if (Input.GetKeyDown(KeyCode.Alpha7)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[6];
+            if (Input.GetKeyDown(KeyCode.Alpha8)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[7];
+            if (Input.GetKeyDown(KeyCode.Alpha9)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[8];
+            if (Input.GetKeyDown(KeyCode.Alpha0)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[9];
         }
 
         if (isColourPhase)
