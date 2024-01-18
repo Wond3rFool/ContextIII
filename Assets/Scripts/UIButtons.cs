@@ -38,10 +38,13 @@ public class UIButtons : MonoBehaviour
     private bool scaleUp;
     private bool scaleDown;
 
+    public static bool usingUI;
+
     private void Start()
     {
         handleButtons = GetComponentInChildren<HandleButton>();
         targetRotation = rotator.transform.rotation;
+        usingUI = false;
     }
 
     private void Update()
@@ -80,47 +83,55 @@ public class UIButtons : MonoBehaviour
     {
         rotateClockwise = true;
         source.PlayOneShot(rotateCamera);
+        usingUI = true;
     }
 
     public void StopRotateCameraClockwise()
     {
         rotateClockwise = false;
         source.PlayOneShot(rotateCamera);
+        usingUI = false;
     }
 
     public void RotateCameraCounterClockwise()
     {
         rotateCounterClockwise = true;
         source.PlayOneShot(rotateCamera);
+        usingUI = true;
     }
 
     public void StopRotateCameraCounterClockwise()
     {
         rotateCounterClockwise = false;
         source.PlayOneShot(rotateCamera);
+        usingUI = false;
     }
 
     public void ScaleObjectUp()
     {
         scaleUp = true;
         source.PlayOneShot(increaseSize);
+        usingUI = true;
     }
 
     public void StopScaleObjectUp()
     {
         scaleUp = false;
         source.PlayOneShot(increaseSize);
+        usingUI = true;
     }
 
     public void ScaleObjectDown()
     {
         scaleDown = true;
         source.PlayOneShot(decreaseSize);
+        usingUI = true;
     }
 
     public void StopScaleObjectDown()
     {
         scaleDown = false;
         source.PlayOneShot(decreaseSize);
+        usingUI = true;
     }
 }

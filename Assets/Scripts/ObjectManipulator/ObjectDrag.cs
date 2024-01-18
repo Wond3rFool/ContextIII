@@ -33,6 +33,11 @@ public class ObjectDrag : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (UIButtons.usingUI) 
+        {
+            isDragging = false;
+            canPlay = true;
+        }
         objectZ = WorldToScreen(transform.position);
         // Calculate the offset between the object's position and the mouse position
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
