@@ -37,6 +37,7 @@ public class ObjectDrag : MonoBehaviour
         {
             isDragging = false;
             canPlay = true;
+            return;
         }
         objectZ = WorldToScreen(transform.position);
         // Calculate the offset between the object's position and the mouse position
