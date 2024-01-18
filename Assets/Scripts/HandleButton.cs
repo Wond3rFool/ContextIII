@@ -112,8 +112,8 @@ public class HandleButton : MonoBehaviour
                 if (values != null)
                 {
                     // Update the rotation of the last clicked object
-                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
-                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
                     if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
                     if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
                 }
@@ -141,7 +141,7 @@ public class HandleButton : MonoBehaviour
             mouseTimer = 0;
         }
 
-        if (mouseTimer > 3)
+        if (mouseTimer > 20)
         {
             mouseInSamePos = true;
         }
@@ -158,39 +158,6 @@ public class HandleButton : MonoBehaviour
 
     void HandleButtonPress(string message)
     {
-        // Check button states on pins 7 to 11
-        if (values[3] == "0") // Button on pin 8 pressed
-        {
-            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y + mouseSpeed));
-        }
-        if (values[2] == "0") // Button on pin 7 pressed
-        {
-            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x + mouseSpeed, Input.mousePosition.y));
-        }
-        if (values[5] == "0") // Button on pin 10 pressed
-        {
-            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y - mouseSpeed));
-        }
-        if (values[4] == "0") // Button on pin 9 pressed
-        {
-            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x - mouseSpeed, Input.mousePosition.y));
-        }
-        if (values[6] == "0") // Button on pin 11 pressed
-        {
-            MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
-
-            lastClickedObject = CheckForObjectClick();
-            //source.PlayOneShot(itemSelect);
-        }
-        if (values[7] == "0")
-        {
-
-        }
-        if (values[8] == "0")
-        {
-
-        }
-
         if (isDesignPhase)
         {
 
@@ -198,7 +165,7 @@ public class HandleButton : MonoBehaviour
 
             for (int i = 0; i < objectsToInstantiate.Length; i++)
             {
-                buttonStates[i] = int.Parse(values[i + 9]) == 1;
+                buttonStates[i] = int.Parse(values[i + 2]) == 1;
 
                 // Convert the mouse position to a world point
                 Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
@@ -207,7 +174,6 @@ public class HandleButton : MonoBehaviour
                 if (buttonStates[i] && spawnTimer > 3 && !mouseInSamePos)
                 {
                     Instantiate(objectsToInstantiate[i], spawnPosition, Quaternion.identity);
-                    Debug.Log(objectsToInstantiate[i].name);
                     spawnItemSound = true;
                     spawnTimer = 0;
                 }
@@ -225,12 +191,15 @@ public class HandleButton : MonoBehaviour
 
                 for (int i = 0; i < materials.Length - 1; i++)
                 {
-                    buttonStates[i] = int.Parse(values[i + 9]) == 1;
+                    buttonStates[i] = int.Parse(values[i + 2]) == 1;
 
                     // Instantiate object on button press if the button was not pressed in the last frame
                     if (buttonStates[i] && !buttonPressedLastFrame[i])
                     {
-                        lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[i];
+                        foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                        {
+                            childRenderer.material.color = colours[i];
+                        }
                     }
 
                     // Update the buttonPressedLastFrame array for the next frame
@@ -336,33 +305,77 @@ public class HandleButton : MonoBehaviour
         if (isMaterialPhase)
         {
 
-            if (Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[0];
-            if (Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[1];
-            if (Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[2];
-            if (Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[3];
-            if (Input.GetKeyDown(KeyCode.Alpha5)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[4];
-            if (Input.GetKeyDown(KeyCode.Alpha6)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[5];
-            if (Input.GetKeyDown(KeyCode.Alpha7)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[6];
-            if (Input.GetKeyDown(KeyCode.Alpha8)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[7];
-            if (Input.GetKeyDown(KeyCode.Alpha9)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[8];
-            if (Input.GetKeyDown(KeyCode.Alpha0)) lastClickedObject.GetComponentInChildren<Renderer>().material.color = colours[9];
-        }
-
-        if (isColourPhase)
-        {
-
-
-            if (Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
-            if (Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponent<Renderer>().material.color = colours[1];
-            if (Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponent<Renderer>().material.color = colours[2];
-            if (Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponent<Renderer>().material.color = colours[3];
-            if (Input.GetKeyDown(KeyCode.Alpha5)) lastClickedObject.GetComponent<Renderer>().material.color = colours[4];
-            if (Input.GetKeyDown(KeyCode.Alpha6)) lastClickedObject.GetComponent<Renderer>().material.color = colours[5];
-            if (Input.GetKeyDown(KeyCode.Alpha7)) lastClickedObject.GetComponent<Renderer>().material.color = colours[6];
-            if (Input.GetKeyDown(KeyCode.Alpha8)) lastClickedObject.GetComponent<Renderer>().material.color = colours[7];
-            if (Input.GetKeyDown(KeyCode.Alpha9)) lastClickedObject.GetComponent<Renderer>().material.color = colours[8];
-
-
+            if (Input.GetKeyDown(KeyCode.Alpha1)) 
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[0];
+                }
+            } 
+            
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[1];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[2];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[3];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[4];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[5];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[6];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[7];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[8];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[9];
+                }
+            }
         }
     }
 

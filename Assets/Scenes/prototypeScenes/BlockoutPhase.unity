@@ -621,7 +621,7 @@ MonoBehaviour:
   arduinoValueReader: {fileID: 1015726226}
   domeObjects: {fileID: 752102355}
   skyboxMaterial: {fileID: 2100000, guid: f8dca18b68d1f5b4f97a285b6a9c0ce6, type: 2}
-  spawnRange: 15
+  spawnRange: 23
   phasePositions:
   - {fileID: 158513112}
   - {fileID: 2046783876}
@@ -679,7 +679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotator: {fileID: 1580710346}
   rotationSpeed: 45
-  scaleDuration: 0.3
+  scaleDuration: 0.9
   source: {fileID: 1504283921}
   increaseSize: {fileID: 0}
   decreaseSize: {fileID: 0}
