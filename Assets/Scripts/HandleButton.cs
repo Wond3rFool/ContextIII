@@ -194,9 +194,9 @@ public class HandleButton : MonoBehaviour
             {
                 bool[] buttonStates = new bool[materials.Length];
 
-                for (int i = 0; i < materials.Length - 1; i++)
+                for (int i = 0; i < materials.Length; i++)
                 {
-                    buttonStates[i] = int.Parse(values[i + 2]) == 1;
+                    buttonStates[i] = int.Parse(values[i + 14]) == 1;
 
                     // Instantiate object on button press if the button was not pressed in the last frame
                     if (buttonStates[i] && !buttonPressedLastFrame[i])
