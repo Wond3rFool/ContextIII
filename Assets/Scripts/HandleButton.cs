@@ -11,8 +11,26 @@ public class HandleButton : MonoBehaviour
     [SerializeField]
     public GameObject[] objectsToInstantiate;
 
+    public Material material;
+    public Shader shaderOff;
+    public Shader sketchShader;
+
+    public AudioSource source;
+
+    public GameObject UiTop;
+
+    public AudioClip spawnItem;
+    public AudioClip changeColour;
+    public AudioClip switchPhase;
+    public AudioClip itemSelect;
+    public AudioClip itemDrop;
+
     // Reference to the ArduinoValueReader script
     public ArduinoValueReader arduinoValueReader;
+
+    public GameObject domeObjects;
+
+    public Material skyboxMaterial;
 
     public int spawnRange;
     private Vector3 mousePosition;
@@ -27,6 +45,8 @@ public class HandleButton : MonoBehaviour
     private float mouseTimer;
     private bool CanRotate;
     private bool mouseInSamePos;
+
+    private bool spawnItemSound;
 
     [SerializeField]
     private Transform[] phasePositions;
@@ -46,6 +66,7 @@ public class HandleButton : MonoBehaviour
 
     void Start()
     {
+        spawnItemSound = false;
         // Ensure that the ArduinoValueReader script is assigned
         if (arduinoValueReader == null)
         {
@@ -59,11 +80,19 @@ public class HandleButton : MonoBehaviour
         mouseInSamePos = false;
         isMaterialPhase = false;
         CanRotate = true;
+        domeObjects.SetActive(false);
+        UiTop.SetActive(true);
         spawnTimer = 0;
     }
 
     void Update()
     {
+        if (spawnItemSound)
+        {
+            source.PlayOneShot(spawnItem);
+            spawnItemSound = false;
+        }
+
         mousePosition = Input.mousePosition;
         // Get the received message from ArduinoValueReader script
         string message = arduinoValueReader.GetCurrentMessage();
@@ -77,19 +106,18 @@ public class HandleButton : MonoBehaviour
         HandleButtonPressNoArduino();
         if (isDesignPhase)
         {
-            if (CanRotate) 
-            {
-                StartCoroutine(RotateCamera(0));
-                CanRotate = false;
-            }
+            domeObjects.SetActive(false);
+            UiTop.SetActive(true);
+            material.shader = sketchShader;
+            RenderSettings.skybox = null;
 
             if (lastClickedObject != null)
             {
                 if (values != null)
                 {
                     // Update the rotation of the last clicked object
-                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
-                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[0] == "1") lastClickedObject.transform.Rotate(Vector3.up * -objectRotationSpeed * Time.deltaTime, Space.World);
+                    if (values[0] == "2") lastClickedObject.transform.Rotate(Vector3.up * objectRotationSpeed * Time.deltaTime, Space.World);
                     if (values[1] == "1") lastClickedObject.transform.Rotate(Vector3.right * objectRotationSpeed * Time.deltaTime, Space.World);
                     if (values[1] == "2") lastClickedObject.transform.Rotate(Vector3.right * -objectRotationSpeed * Time.deltaTime, Space.World);
                 }
@@ -102,14 +130,13 @@ public class HandleButton : MonoBehaviour
         }
         if (isMaterialPhase)
         {
-            if (CanRotate)
-            {
-                StartCoroutine(RotateCamera(1));
-                CanRotate = false;
-            }
+            domeObjects.SetActive(true);
+            UiTop.SetActive(false);
+            material.shader = shaderOff;
+            RenderSettings.skybox = skyboxMaterial;
         }
 
-        if (OldMousePosition == mousePosition) 
+        if (OldMousePosition == mousePosition)
         {
             mouseTimer += Time.deltaTime;
         }
@@ -119,68 +146,31 @@ public class HandleButton : MonoBehaviour
             mouseTimer = 0;
         }
 
-        if (mouseTimer > 3)
+        if (mouseTimer > 20)
         {
             mouseInSamePos = true;
         }
-
-
         OldMousePosition = mousePosition;
     }
 
+    public void DeleteSelectedGameObject()
+    {
+        if (lastClickedObject != null)
+        {
+            Destroy(lastClickedObject.gameObject);
+        }
+    }
 
     void HandleButtonPress(string message)
     {
-        // Check button states on pins 7 to 11
-        if (values[3] == "0") // Button on pin 8 pressed
-        {
-            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y + mouseSpeed));
-        }
-        if (values[2] == "0") // Button on pin 7 pressed
-        {
-            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x + mouseSpeed, Input.mousePosition.y));
-        }
-        if (values[5] == "0") // Button on pin 10 pressed
-        {
-            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y - mouseSpeed));
-        }
-        if (values[4] == "0") // Button on pin 9 pressed
-        {
-            Mouse.current.WarpCursorPosition(new Vector2(Input.mousePosition.x - mouseSpeed, Input.mousePosition.y));
-        }
-        if (values[6] == "0") // Button on pin 11 pressed
-        {
-            MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp | MouseOperations.MouseEventFlags.LeftDown);
-
-            lastClickedObject = CheckForObjectClick();
-        }
-        if (values[7] == "0") 
-        {
-            if (isDesignPhase)
-            {
-                isDesignPhase = false;
-                isMaterialPhase = true;
-                CanRotate = true;
-            }
-        }
-        if (values[8] == "0") 
-        {
-            if (isMaterialPhase)
-            {
-                isMaterialPhase = false;
-                isDesignPhase = true;
-                CanRotate = true;
-            }
-        }
-
-
         if (isDesignPhase)
         {
+
             bool[] buttonStates = new bool[objectsToInstantiate.Length];
 
             for (int i = 0; i < objectsToInstantiate.Length; i++)
             {
-                buttonStates[i] = int.Parse(values[i + 9]) == 1;
+                buttonStates[i] = int.Parse(values[i + 2]) == 1;
 
                 // Convert the mouse position to a world point
                 Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
@@ -189,7 +179,7 @@ public class HandleButton : MonoBehaviour
                 if (buttonStates[i] && spawnTimer > 3 && !mouseInSamePos)
                 {
                     Instantiate(objectsToInstantiate[i], spawnPosition, Quaternion.identity);
-                    Debug.Log(objectsToInstantiate[i].name);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
 
@@ -206,12 +196,15 @@ public class HandleButton : MonoBehaviour
 
                 for (int i = 0; i < materials.Length - 1; i++)
                 {
-                    buttonStates[i] = int.Parse(values[i + 9]) == 1;
+                    buttonStates[i] = int.Parse(values[i + 2]) == 1;
 
                     // Instantiate object on button press if the button was not pressed in the last frame
                     if (buttonStates[i] && !buttonPressedLastFrame[i])
                     {
-                        lastClickedObject.GetComponent<Renderer>().material = materials[i];
+                        foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                        {
+                            childRenderer.material.color = colours[i];
+                        }
                     }
 
                     // Update the buttonPressedLastFrame array for the next frame
@@ -240,97 +233,154 @@ public class HandleButton : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
                     Instantiate(objectsToInstantiate[0], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
-                if (Input.GetKeyDown(KeyCode.Alpha2)) 
+                if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
                     Instantiate(objectsToInstantiate[1], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
-                } 
-                
+                }
+
                 if (Input.GetKeyDown(KeyCode.Alpha3))
-                { 
+                {
                     Instantiate(objectsToInstantiate[2], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
-                } 
+                }
                 if (Input.GetKeyDown(KeyCode.Alpha4))
                 {
                     Instantiate(objectsToInstantiate[3], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
-                } 
+                }
                 if (Input.GetKeyDown(KeyCode.Alpha5))
                 {
                     Instantiate(objectsToInstantiate[4], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
-                if (Input.GetKeyDown(KeyCode.Alpha6)) 
+                if (Input.GetKeyDown(KeyCode.Alpha6))
                 {
                     Instantiate(objectsToInstantiate[5], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
-                }  
-                if (Input.GetKeyDown(KeyCode.Alpha7)) 
-                { 
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha7))
+                {
                     Instantiate(objectsToInstantiate[6], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
                 if (Input.GetKeyDown(KeyCode.Alpha8))
-                { 
+                {
                     Instantiate(objectsToInstantiate[7], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
-                } 
+                }
                 if (Input.GetKeyDown(KeyCode.Alpha9))
-                { 
+                {
                     Instantiate(objectsToInstantiate[8], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
-                if (Input.GetKeyDown(KeyCode.Alpha0)) 
-                { 
+                if (Input.GetKeyDown(KeyCode.Alpha0))
+                {
                     Instantiate(objectsToInstantiate[9], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
-                if (Input.GetKeyDown(KeyCode.Minus)) 
-                { 
+                if (Input.GetKeyDown(KeyCode.Minus))
+                {
                     Instantiate(objectsToInstantiate[10], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
                 if (Input.GetKeyDown(KeyCode.Equals))
                 {
                     Instantiate(objectsToInstantiate[11], spawnP, Quaternion.identity);
+                    spawnItemSound = true;
                     spawnTimer = 0;
                 }
-                
+
             }
         }
 
         if (isMaterialPhase)
         {
 
-            if (Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponent<Renderer>().material = materials[0];
-            if (Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponent<Renderer>().material = materials[1];
-            if (Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponent<Renderer>().material = materials[2];
-            if (Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponent<Renderer>().material = materials[3];
-            if (Input.GetKeyDown(KeyCode.Alpha5)) lastClickedObject.GetComponent<Renderer>().material = materials[4];
-            if (Input.GetKeyDown(KeyCode.Alpha6)) lastClickedObject.GetComponent<Renderer>().material = materials[5];
-            if (Input.GetKeyDown(KeyCode.Alpha7)) lastClickedObject.GetComponent<Renderer>().material = materials[6];
-            if (Input.GetKeyDown(KeyCode.Alpha8)) lastClickedObject.GetComponent<Renderer>().material = materials[7];
-            if (Input.GetKeyDown(KeyCode.Alpha9)) lastClickedObject.GetComponent<Renderer>().material = materials[8];
-        }
-
-        if (isColourPhase)
-        {
-
-
-            if (Input.GetKeyDown(KeyCode.Alpha1)) lastClickedObject.GetComponent<Renderer>().material.color = colours[0];
-            if (Input.GetKeyDown(KeyCode.Alpha2)) lastClickedObject.GetComponent<Renderer>().material.color = colours[1];
-            if (Input.GetKeyDown(KeyCode.Alpha3)) lastClickedObject.GetComponent<Renderer>().material.color = colours[2];
-            if (Input.GetKeyDown(KeyCode.Alpha4)) lastClickedObject.GetComponent<Renderer>().material.color = colours[3];
-            if (Input.GetKeyDown(KeyCode.Alpha5)) lastClickedObject.GetComponent<Renderer>().material.color = colours[4];
-            if (Input.GetKeyDown(KeyCode.Alpha6)) lastClickedObject.GetComponent<Renderer>().material.color = colours[5];
-            if (Input.GetKeyDown(KeyCode.Alpha7)) lastClickedObject.GetComponent<Renderer>().material.color = colours[6];
-            if (Input.GetKeyDown(KeyCode.Alpha8)) lastClickedObject.GetComponent<Renderer>().material.color = colours[7];
-            if (Input.GetKeyDown(KeyCode.Alpha9)) lastClickedObject.GetComponent<Renderer>().material.color = colours[8];
-
-
+            if (Input.GetKeyDown(KeyCode.Alpha1)) 
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[0];
+                }
+            } 
+            
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[1];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[2];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[3];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[4];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[5];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[6];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[7];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[8];
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                foreach (Renderer childRenderer in lastClickedObject.GetComponentsInChildren<Renderer>())
+                {
+                    childRenderer.material.color = colours[9];
+                }
+            }
         }
     }
 
@@ -359,10 +409,10 @@ public class HandleButton : MonoBehaviour
             return clickedObject.gameObject; // Return the clicked object
         }
 
-        return null; // Return null if no object is clicked
+        return lastClickedObject; // Return null if no object is clicked
     }
 
-    private IEnumerator RotateCamera(int phase) 
+    private IEnumerator RotateCamera(int phase)
     {
         float elapsedTime = 0.001f;
         float turnSpeed = 800f;
@@ -370,22 +420,39 @@ public class HandleButton : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            transform.position = Vector3.Lerp(transform.position, phasePositions[phase].position, elapsedTime/ turnSpeed);
+            transform.position = Vector3.Lerp(transform.position, phasePositions[phase].position, elapsedTime / turnSpeed);
             transform.rotation = Quaternion.Lerp(transform.rotation, phasePositions[phase].rotation, elapsedTime / turnSpeed);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
     }
 
-    public GameObject GetLastSelectedGameObject() 
+    public GameObject GetLastSelectedGameObject()
     {
         if (lastClickedObject != null)
         {
             return lastClickedObject;
         }
-        else 
+        else
         {
             return null;
+        }
+    }
+
+    public void SwitchPhase()
+    {
+        source.PlayOneShot(switchPhase);
+        if (isMaterialPhase)
+        {
+            isMaterialPhase = false;
+            isDesignPhase = true;
+            CanRotate = true;
+        }
+        else if (isDesignPhase)
+        {
+            isDesignPhase = false;
+            isMaterialPhase = true;
+            CanRotate = true;
         }
     }
 }
