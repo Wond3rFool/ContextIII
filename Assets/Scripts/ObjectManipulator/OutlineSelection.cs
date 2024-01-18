@@ -44,7 +44,7 @@ public class OutlineSelection : MonoBehaviour
                         outline.enabled = true;
 
                         // Set the OutlineColor and OutlineWidth as desired
-                        outline.OutlineColor = Color.magenta;
+                        outline.OutlineColor = Color.black;
                         outline.OutlineWidth = 7.0f;
                     }
                 }
@@ -74,18 +74,6 @@ public class OutlineSelection : MonoBehaviour
                 }
                 highlight = null;
             }
-            else
-            {
-                if (selection)
-                {
-                    foreach (Outline lin in selection.gameObject.GetComponentsInChildren<Outline>())
-                    {
-                        lin.enabled = false;
-                    }
-                    selection = null;
-                }
-            }
         }
     }
-
 }
