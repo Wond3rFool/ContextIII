@@ -14,7 +14,10 @@ public class OutlineSelection : MonoBehaviour
         // Highlight
         if (highlight != null)
         {
-            highlight.gameObject.GetComponent<Outline>().enabled = false;
+            foreach (Outline lin in highlight.gameObject.GetComponentsInChildren<Outline>())
+            {
+                lin.enabled = false;
+            }
             highlight = null;
         }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -23,16 +26,27 @@ public class OutlineSelection : MonoBehaviour
             highlight = raycastHit.transform;
             if (highlight.CompareTag("Selectable") && highlight != selection)
             {
-                if (highlight.gameObject.GetComponent<Outline>() != null)
+                if (highlight.gameObject.GetComponentInChildren<Outline>() != null)
                 {
-                    highlight.gameObject.GetComponent<Outline>().enabled = true;
+                    foreach (Outline lin in highlight.gameObject.GetComponentsInChildren<Outline>())
+                    {
+                        lin.enabled = true;
+                    }
                 }
                 else
                 {
-                    Outline outline = highlight.gameObject.AddComponent<Outline>();
-                    outline.enabled = true;
-                    highlight.gameObject.GetComponent<Outline>().OutlineColor = Color.magenta;
-                    highlight.gameObject.GetComponent<Outline>().OutlineWidth = 7.0f;
+                    foreach (Transform child in highlight.transform)
+                    {
+                        // Add the Outline component to each child
+                        Outline outline = child.gameObject.AddComponent<Outline>();
+
+                        // Enable the Outline
+                        outline.enabled = true;
+
+                        // Set the OutlineColor and OutlineWidth as desired
+                        outline.OutlineColor = Color.magenta;
+                        outline.OutlineWidth = 7.0f;
+                    }
                 }
             }
             else
@@ -48,17 +62,26 @@ public class OutlineSelection : MonoBehaviour
             {
                 if (selection != null)
                 {
-                    selection.gameObject.GetComponent<Outline>().enabled = false;
+                    foreach (Outline lin in selection.gameObject.GetComponentsInChildren<Outline>())
+                    {
+                        lin.enabled = false;
+                    }
                 }
                 selection = raycastHit.transform;
-                selection.gameObject.GetComponent<Outline>().enabled = true;
+                foreach (Outline lin in selection.gameObject.GetComponentsInChildren<Outline>())
+                {
+                    lin.enabled = true;
+                }
                 highlight = null;
             }
             else
             {
                 if (selection)
                 {
-                    selection.gameObject.GetComponent<Outline>().enabled = false;
+                    foreach (Outline lin in selection.gameObject.GetComponentsInChildren<Outline>())
+                    {
+                        lin.enabled = false;
+                    }
                     selection = null;
                 }
             }
