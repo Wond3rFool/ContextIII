@@ -20,7 +20,7 @@ public class ObjectDrag : MonoBehaviour
 
     private void Update()
     {
-        if (isDragging)
+        if (isDragging && !UIButtons.usingUI)
         {
             objectZ = WorldToScreen(transform.position);
             // Calculate the new position based on the offset
@@ -33,12 +33,6 @@ public class ObjectDrag : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (UIButtons.usingUI) 
-        {
-            isDragging = false;
-            canPlay = true;
-            return;
-        }
         objectZ = WorldToScreen(transform.position);
         // Calculate the offset between the object's position and the mouse position
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
