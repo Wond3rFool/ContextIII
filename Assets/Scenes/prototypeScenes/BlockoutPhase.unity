@@ -442,6 +442,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3298570585390995226, guid: ab950740182ee2742a566d86472668ac, type: 3}
   m_PrefabInstance: {fileID: 75677723}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &857835121 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3780965999344736544, guid: 613c7b5cae69ce745953874ef2cfed53, type: 3}
+  m_PrefabInstance: {fileID: 1504283920}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1015726220
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,6 +618,7 @@ MonoBehaviour:
   shaderOff: {fileID: 4800000, guid: c21ede0a97b417d4c942f7a1f84341ac, type: 3}
   sketchShader: {fileID: -6465566751694194690, guid: 529395d951cfdcf4db32c3d11c1ccb0c, type: 3}
   source: {fileID: 1015726228}
+  UiTop: {fileID: 857835121}
   spawnItem: {fileID: 0}
   changeColour: {fileID: 0}
   switchPhase: {fileID: 0}

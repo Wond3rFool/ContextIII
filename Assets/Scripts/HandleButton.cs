@@ -17,6 +17,8 @@ public class HandleButton : MonoBehaviour
 
     public AudioSource source;
 
+    public GameObject UiTop;
+
     public AudioClip spawnItem;
     public AudioClip changeColour;
     public AudioClip switchPhase;
@@ -79,6 +81,7 @@ public class HandleButton : MonoBehaviour
         isMaterialPhase = false;
         CanRotate = true;
         domeObjects.SetActive(false);
+        UiTop.SetActive(true);
         spawnTimer = 0;
     }
 
@@ -104,6 +107,7 @@ public class HandleButton : MonoBehaviour
         if (isDesignPhase)
         {
             domeObjects.SetActive(false);
+            UiTop.SetActive(true);
             material.shader = sketchShader;
             RenderSettings.skybox = null;
 
@@ -127,6 +131,7 @@ public class HandleButton : MonoBehaviour
         if (isMaterialPhase)
         {
             domeObjects.SetActive(true);
+            UiTop.SetActive(false);
             material.shader = shaderOff;
             RenderSettings.skybox = skyboxMaterial;
         }
