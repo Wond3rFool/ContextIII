@@ -141,7 +141,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_44f3b1a14df04930883cefa816bb6654_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: cfab25b9785686948bc3c5038c508718, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6013d90728110fd44b8a82acc4226c4f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_47c47d6ac79641618e4b5a629bd63a7d_Texture_1_Texture2D:
@@ -345,7 +345,7 @@ Material:
     - _HatchingScale: {r: 15, g: 1, b: 0, a: 0}
     - _OutlineC: {r: 0.6886792, g: 0.36383054, b: 0, a: 0}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 0.27450982}
-    - _OutlineColour: {r: 0.3584906, g: 0.2216621, b: 0, a: 0}
+    - _OutlineColour: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0}
     - _OutlineDistancFade: {r: -25, g: 50, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SPECULAR_COLOR: {r: 1, g: 1, b: 1, a: 0}
