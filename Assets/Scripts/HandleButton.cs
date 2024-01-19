@@ -176,7 +176,7 @@ public class HandleButton : MonoBehaviour
                 Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
 
                 // Instantiate object on button press if the button was not pressed in the last frame
-                if (buttonStates[i] && spawnTimer > 3 && !mouseInSamePos)
+                if (buttonStates[i] && spawnTimer > 2 && !mouseInSamePos)
                 {
                     Instantiate(objectsToInstantiate[i], spawnPosition, Quaternion.identity);
                     spawnItemSound = true;
@@ -196,7 +196,7 @@ public class HandleButton : MonoBehaviour
 
                 for (int i = 0; i < materials.Length; i++)
                 {
-                    buttonStates[i] = int.Parse(values[i + 14]) == 1;
+                    buttonStates[i] = int.Parse(values[i + 15]) == 1;
 
                     // Instantiate object on button press if the button was not pressed in the last frame
                     if (buttonStates[i] && !buttonPressedLastFrame[i])
@@ -226,7 +226,7 @@ public class HandleButton : MonoBehaviour
         if (isDesignPhase)
         {
 
-            if (spawnTimer > 3 && !mouseInSamePos)
+            if (spawnTimer > 2 && !mouseInSamePos)
             {
                 // Check keyboard input for object instantiation
                 Vector3 spawnP = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));

@@ -118,7 +118,7 @@ public class UIButtons : MonoBehaviour
     {
         scaleUp = false;
         source.PlayOneShot(increaseSize);
-        usingUI = true;
+        usingUI = false;
     }
 
     public void ScaleObjectDown()
@@ -132,6 +132,6 @@ public class UIButtons : MonoBehaviour
     {
         scaleDown = false;
         source.PlayOneShot(decreaseSize);
-        usingUI = true;
+        usingUI = false;
     }
 }
