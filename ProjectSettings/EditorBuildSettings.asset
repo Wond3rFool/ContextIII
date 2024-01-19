@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Menuscreen.unity
+    guid: 680a3ae432c493441917c442bda25d88
+  - enabled: 1
     path: Assets/Scenes/prototypeScenes/BlockoutPhase.unity
     guid: 2ee46406857a5d347a26e0b7559a274b
   m_configObjects:
