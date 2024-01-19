@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 1853808345787261800}
   - component: {fileID: 8689675459540833856}
   - component: {fileID: 3285752870075915818}
+  - component: {fileID: -6880928402981439993}
   m_Layer: 0
   m_Name: MetronoomFinal
   m_TagString: Untagged
@@ -249,6 +250,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!114 &-6880928402981439993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4236276573940062957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8224889140e490345a6ea2433a474ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  source: {fileID: 0}
 --- !u!1 &7276154080532937532
 GameObject:
   m_ObjectHideFlags: 0

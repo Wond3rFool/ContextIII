@@ -206,6 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  source: {fileID: 0}
 --- !u!4 &749549035634506369 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ac26c977a64c6d644992386f02c2d956, type: 3}

@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  source: {fileID: 0}
 --- !u!65 &7427430321800527807
 BoxCollider:
   m_ObjectHideFlags: 0

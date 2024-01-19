@@ -6,6 +6,11 @@ public class ObjectDrag : MonoBehaviour
     [SerializeField]
     private Camera cam;
 
+    [SerializeField]
+    AudioClip source;
+
+    AudioSource sourceAudioSource;
+
     private bool isDragging;
     private bool canPlay;
     private Vector3 offset;
@@ -16,6 +21,8 @@ public class ObjectDrag : MonoBehaviour
         isDragging = false;
         canPlay = true;
         cam = FindAnyObjectByType<Camera>();
+        sourceAudioSource = gameObject.AddComponent<AudioSource>();
+
     }
 
     private void Update()
@@ -33,6 +40,7 @@ public class ObjectDrag : MonoBehaviour
 
     private void OnMouseDown()
     {
+        sourceAudioSource.PlayOneShot(source);
         objectZ = WorldToScreen(transform.position);
         // Calculate the offset between the object's position and the mouse position
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);

@@ -689,6 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  source: {fileID: 0}
 --- !u!1 &4829208083074522099
 GameObject:
   m_ObjectHideFlags: 0
