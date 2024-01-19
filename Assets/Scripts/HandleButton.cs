@@ -39,14 +39,15 @@ public class HandleButton : MonoBehaviour
     private bool[] buttonPressedLastFrame;
     private bool isDesignPhase;
     private bool isMaterialPhase;
-    private bool isColourPhase;
     private string[] values;
     private float spawnTimer;
     private float mouseTimer;
-    private bool CanRotate;
     private bool mouseInSamePos;
 
     private bool spawnItemSound;
+
+    public GameObject infographic;
+    public GameObject postProces;
 
     [SerializeField]
     private Transform[] phasePositions;
@@ -64,6 +65,8 @@ public class HandleButton : MonoBehaviour
 
     public float objectRotationSpeed;
 
+    private bool firstItemSpawned;
+
     void Start()
     {
         spawnItemSound = false;
@@ -79,8 +82,9 @@ public class HandleButton : MonoBehaviour
         isDesignPhase = true;
         mouseInSamePos = false;
         isMaterialPhase = false;
-        CanRotate = true;
         domeObjects.SetActive(false);
+        postProces.SetActive(false);
+        firstItemSpawned = false;
         UiTop.SetActive(true);
         spawnTimer = 0;
     }
@@ -107,6 +111,7 @@ public class HandleButton : MonoBehaviour
         if (isDesignPhase)
         {
             domeObjects.SetActive(false);
+            postProces.SetActive(false);
             UiTop.SetActive(true);
             material.shader = sketchShader;
             RenderSettings.skybox = null;
@@ -131,6 +136,7 @@ public class HandleButton : MonoBehaviour
         if (isMaterialPhase)
         {
             domeObjects.SetActive(true);
+            postProces.SetActive(true);
             UiTop.SetActive(false);
             material.shader = shaderOff;
             RenderSettings.skybox = skyboxMaterial;
@@ -178,6 +184,12 @@ public class HandleButton : MonoBehaviour
                 // Instantiate object on button press if the button was not pressed in the last frame
                 if (buttonStates[i] && spawnTimer > 2 && !mouseInSamePos)
                 {
+                    if (firstItemSpawned == false) 
+                    { 
+                        infographic.SetActive(false);
+                        firstItemSpawned = true;    
+                    }
+
                     Instantiate(objectsToInstantiate[i], spawnPosition, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
@@ -232,6 +244,12 @@ public class HandleButton : MonoBehaviour
                 Vector3 spawnP = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, spawnRange));
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
+                    if (firstItemSpawned == false)
+                    {
+                        infographic.SetActive(false);
+                        firstItemSpawned = true;
+                    }
+
                     Instantiate(objectsToInstantiate[0], spawnP, Quaternion.identity);
                     spawnItemSound = true;
                     spawnTimer = 0;
@@ -446,13 +464,11 @@ public class HandleButton : MonoBehaviour
         {
             isMaterialPhase = false;
             isDesignPhase = true;
-            CanRotate = true;
         }
         else if (isDesignPhase)
         {
             isDesignPhase = false;
             isMaterialPhase = true;
-            CanRotate = true;
         }
     }
 }

@@ -216,12 +216,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.61659366, y: 1.1876242, z: 1}
+  m_Center: {x: -0.0040787756, y: 0.44050944, z: 0}
 --- !u!54 &3285752870075915818
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -258,7 +258,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8048433058855838086}
-  - component: {fileID: 2307656119181628853}
   m_Layer: 0
   m_Name: MetronoomFinal
   m_TagString: Untagged
@@ -282,24 +281,3 @@ Transform:
   - {fileID: 4256074019948275903}
   m_Father: {fileID: 1853808345787261800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2307656119181628853
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7276154080532937532}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.1139345, z: 1}
-  m_Center: {x: 0, y: 0.4319199, z: 0}
