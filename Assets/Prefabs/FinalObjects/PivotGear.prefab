@@ -94,9 +94,10 @@ GameObject:
   - component: {fileID: 4000226108489080630}
   - component: {fileID: 2765204445956640878}
   - component: {fileID: 243728042924910207}
+  - component: {fileID: -1150073027680590515}
   m_Layer: 0
   m_Name: PivotGear
-  m_TagString: Untagged
+  m_TagString: Selectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,3 +166,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.3747215, y: 2.3866236, z: 0.25015205}
   m_Center: {x: -0.020828247, y: -0.026780248, z: 0.053560525}
+--- !u!114 &-1150073027680590515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7354285444242064228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8224889140e490345a6ea2433a474ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  source: {fileID: 0}

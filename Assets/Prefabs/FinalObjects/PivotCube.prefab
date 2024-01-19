@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2927326014982114217}
   - component: {fileID: 2413619749571659945}
   - component: {fileID: 234999002016114714}
+  - component: {fileID: 52089407346209877}
   m_Layer: 0
   m_Name: PivotCube
-  m_TagString: Untagged
+  m_TagString: Selectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,6 +83,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!114 &52089407346209877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4191582489503860654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8224889140e490345a6ea2433a474ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  source: {fileID: 0}
 --- !u!1001 &8838926137031305412
 PrefabInstance:
   m_ObjectHideFlags: 0
